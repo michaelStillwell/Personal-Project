@@ -1,0 +1,16 @@
+.bkg {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    background-image: url('./home_background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.link {
+    text-decoration: none;
+    color: red;
+}

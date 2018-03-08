@@ -1,0 +1,1 @@
+SELECT * FROM employee WHERE username = $1;

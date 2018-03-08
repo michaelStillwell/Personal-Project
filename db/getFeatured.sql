@@ -1,0 +1,1 @@
+SELECT p.id, p.name, p.description, p.price, p.stock FROM featured_product AS f JOIN product AS p ON p.id = f.product;

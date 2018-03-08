@@ -1,0 +1,1 @@
+UPDATE emp_order SET completion = true WHERE emp_id = $1 AND order_id = $2;

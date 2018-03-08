@@ -1,0 +1,90 @@
+body {
+    background: red;
+    font-family: 'Righteous', cursive;
+    text-decoration: none;
+}
+
+.home-container {
+    h1 {
+        color: white;   
+    }
+}
+
+.header-container {
+    background: blue;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    nav {
+        display: flex;
+        align-items: center;
+    }
+
+    button {
+        font-family: 'Righteous', cursive;
+        color: white;
+        font-size: 24px;
+        background: none;
+        border: none;
+        transition: 250ms ease-in-out;
+
+        &:hover {
+            color: black;
+        }
+    }
+
+    .toggle-on {
+        background: aquamarine;
+    }
+
+    .hamburger {
+        height: 100px;
+        width: 100px;
+        position: absolute;
+        top: 0; right: 0;
+        background: brown;
+        margin: 0;
+        display: none;
+    }
+
+    @media screen and (max-width: 450px) {
+        h1 {
+            font-size: 24px;
+        }
+
+        button {
+            display: none;
+        }
+
+        .hamburger{
+            display: block;
+
+            &:focus {
+                button {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+.browse-container {
+    h1 {
+        color: green;
+    }
+
+    button {
+        background: none;
+        border: none;
+        color: white;
+        font-family: 'Righteous', cursive;
+        font-size: 23px;
+        text-decoration: none;
+        &:focus, &:hover, &:visited, &:link, &:active {
+            text-decoration: none;
+        }
+    }
+
+}

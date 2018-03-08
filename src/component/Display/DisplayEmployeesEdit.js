@@ -1,0 +1,68 @@
+// React Imports
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { 
+            updateUsernameEdit, 
+            updatePasswordEdit,
+            updateTypeEdit, 
+            deleteEmployees,
+            editEmployees
+        } from '../../ducks/reducer';
+import { Link, Loading } from '../../imports';
+
+class DisplayEmployeeEdit extends Component {
+    render() {
+        let employee = this.props.employees.filter(x => x.id === Number(this.props.match.params.id));
+        let send = {
+                user: this.props.employeesEditUsername, 
+                password: this.props.employeesEditPassword, 
+                emp_type: this.props.employeesEditType
+            }
+        return (
+            <div>
+                <h1>Edit Page</h1>
+                {this.props.employees.length ? (
+                    <div>
+                        <h1>Employee</h1>
+                        <h1>{employee[0].username}</h1>
+                        <input type="text" placeholder='Update Username' 
+                            onChange={e => this.props.updateUsernameEdit(e.target.value)}
+                            defaultValue={employee[0].username}
+                        />
+                        <input type="text" placeholder='Update Password' 
+                            onChange={e => this.props.updatePasswordEdit(e.target.value)}
+                            defaultValue={employee[0].password}
+                        />
+                        <h2>{employee[0].emp_type}</h2>
+                        <input type="text" placeholder='Update Type' 
+                            onChange={e => this.props.updateTypeEdit(e.target.value)}
+                            defaultValue={employee[0].emp_type}
+                        />
+                        <Link to='/employees'>
+                            <button 
+                                onClick={() => this.props.editEmployees(this.props.match.params.id, send)}
+                                >Update
+                            </button>
+                        </Link>
+                        <Link to='/employees'>
+                            <button 
+                                onClick={() => this.props.deleteEmployees(this.props.match.params.id)}
+                                >Delete
+                            </button>
+                        </Link>
+                    </div>
+                ) : <Loading />}
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = state => state;
+
+export default connect(mapStateToProps, { 
+                                            updateUsernameEdit, 
+                                            updatePasswordEdit, 
+                                            updateTypeEdit, 
+                                            deleteEmployees,
+                                            editEmployees
+                                        })(DisplayEmployeeEdit);
