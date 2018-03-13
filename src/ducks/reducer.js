@@ -106,6 +106,7 @@ export function checkSession() {
 }
 
 export function updateUsername(val) {
+    console.log(val);
     return {
         type: UPDATE_USERNAME,
         payload: val
@@ -176,6 +177,7 @@ export function productsCreate(input, val) {
 }
 
 export function authUser(send) {
+    console.log('FIRST: ', send)
     return {
         type: AUTH_USER,
         payload:
@@ -183,6 +185,7 @@ export function authUser(send) {
                 .post('/api/auth', send)
                 .then(response => {
                     if ( response.data.Body.length ) {
+                        console.log('SECOND: ', send);
                         window.location.href = window.location;
                         return response.data.Body[0];
                     } else {
@@ -244,7 +247,11 @@ export function getCurrentProduct(product) {
         payload:
             axios
                 .get(`/api/product/${product}`)
-                .then(response => response.data[0])
+                .then(response => { 
+                    let res = response.data[0];
+                    res.price = res.price.toFixed(2);
+                    return res;
+                })
                 .catch(err => console.log(err))
     }
 }
@@ -270,18 +277,17 @@ export function updateCurrentProduct(id, send) {
         payload: 
             axios
                 .put(`/api/products/update/${id}`, send)
-                .then(response => console.log(response))
                 .catch(err => console.log('UPDATE PRODUCT: ', err))
     }
 }
 
 export function deleteCurrentProduct(id) {
+    console.log('hi1')
     return {
         type: DELETE_PRODUCT,
         payload:
             axios
                 .delete(`/api/products/delete/${id}`)
-                .then( response => console.log(response))
                 .catch(err => console.log('DELETE PRODUCT: ', err))
     }
 }
@@ -303,7 +309,7 @@ export function markAsComplete(send) {
         payload: 
             axios
                 .put(`/api/orders/${send.username}/${send.id}/complete`)
-                .then(response => console.log(response))
+                .then(() => window.location.href = window.location.origin + '/#/orders')
                 .catch(err => console.log(err))
     }
 }

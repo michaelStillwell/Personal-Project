@@ -12,24 +12,44 @@ class DisplayWarehouseOrder extends  Component {
 
     render() {
         let send = { username: this.props.match.params.username, id: this.props.match.params.id };
+        let win = window.innerWidth > 1024;
         return (
-            <div>
-                {!this.props.currentOrderLoading ? (
-                    <div>
-                        <h1>Warehouse Order Page</h1>
-                        <h2>Products: </h2>
-                        {this.props.currentOrder.map((x,y) => {
-                            return (
-                                <div key={y}>
-                                    <h3>{x.name}</h3>
-                                </div>
-                            )
-                        })}
-                        <Link to='/orders'>
+            <div className='display-order-container'>
+                {win ? (
+                    !this.props.currentOrderLoading ? (
+                        <div>
+                            <h1>Warehouse Order Page</h1>
+                            <h2>Products: </h2>
+                            {this.props.currentOrder.map((x,y) => {
+                                return (
+                                    <div key={y}>
+                                        <Link to={`/product/display/${x.product}`}>
+                                            {x.name}
+                                        </Link>
+                                    </div>
+                                )
+                            })}
                             <button onClick={() => this.props.markAsComplete(send)}>Mark as complete</button>
-                        </Link>
-                    </div>
-                ) : <Loading />}
+                        </div>
+                    ) : <Loading />
+                ) : (
+                    !this.props.currentOrderLoading ? (
+                        <div className='display-order-mobile'>
+                            <h1>Orders</h1>
+                            <h2>Products:</h2>
+                            {this.props.currentOrder.map((x,y) => {
+                                return (
+                                    <div key={y}>
+                                        <Link to={`/product/display/${x.product}`}>
+                                            {x.name}
+                                        </Link>
+                                    </div>
+                                )
+                            })}
+                            <button onClick={() => this.props.markAsComplete(send)}>Mark as complete</button>
+                        </div>
+                    ) : <Loading />
+                )}
             </div>
         )
     }

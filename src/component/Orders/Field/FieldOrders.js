@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Loading } from '../../../imports';
 import { 
-    getFieldOrders, getNewOrder, getNewOrderProducts, removeFromNewOrder, removeAllFromNewOrder, placeOrder
+    getFieldOrders, getNewOrderProducts, removeFromNewOrder, removeAllFromNewOrder, placeOrder
 } from '../../../ducks/reducer';
 
 class FieldOrders extends Component {
@@ -29,15 +29,14 @@ class FieldOrders extends Component {
         return (
             <div>
                 {!this.props.newProductsLoading && !this.props.ordersLoading ? (
-                    <div>
+                    <div className='order-container'>
                         <h1>Field Orders Page</h1>
-                        <h2>Current Order:</h2>
                         {this.props.currentOrder.map((x,y) => {
                             let send = {user: this.props.user, id: x.id};
                             return (
                                 <div key={y}>
                                     <h4>{x.name}</h4>
-                                    <button onClick={() => this.props.removeFromNewOrder(send)}>Remove {x.id}</button>
+                                    <a onClick={() => this.props.removeFromNewOrder(send)}>Remove {x.id}</a>
                                 </div>
                             )
                         })}
@@ -49,16 +48,27 @@ class FieldOrders extends Component {
                                 </div>
                             ) : <button>Create New Order</button>
                         }
-                        <h2>Pending Orders:</h2>
-                        {this.props.orders.map((x, y) => {
-                            return (
-                                <div key={y}>
-                                    <Link to={`/order/${x.username}/${x.order_id}`}>
-                                        <h2>{x.order_id}</h2>
-                                    </Link>
+                        {
+                            this.props.orders.length ? (
+                                <div>
+                                    <h2>Pending Orders:</h2>
+                                    {this.props.orders.map((x, y) => {
+                                        return (
+                                            <div key={y}>
+                                                <Link to={`/order/${x.username}/${x.order_id}`}>
+                                                    Order {x.order_id}
+                                                </Link>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            ) : (
+                                <div>
+                                    <h2>No Orders Pending</h2>
                                 </div>
                             )
-                        })} 
+                        }
+
                     </div>)
                 : <Loading />}
             </div>
@@ -69,5 +79,5 @@ class FieldOrders extends Component {
 const mapStateToProps = state => state;
 
 export default connect(mapStateToProps, { 
-    getFieldOrders, getNewOrder, getNewOrderProducts, removeFromNewOrder, removeAllFromNewOrder, placeOrder
+    getFieldOrders, getNewOrderProducts, removeFromNewOrder, removeAllFromNewOrder, placeOrder
 })(FieldOrders);

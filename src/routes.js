@@ -1,7 +1,7 @@
 // React Imports
 import React from 'react';
 import { 
-    Switch, Route, 
+    Switch, Route, Test,
 
     LandingPage, Home, Browse, 
     Orders, FieldNewOrder, DisplayFieldOrder, 
@@ -26,6 +26,7 @@ export default (
         <Route path='/employee/create' component={DisplayEmployeesCreate} />
         <Route path='/employee/edit/:id' component={DisplayEmployeesEdit} />
         <Route path='/map' component={Map} />
+        <Route path='/test' component={Test} />
         <Route path='*' component={NoPage} />
     </Switch>
 )

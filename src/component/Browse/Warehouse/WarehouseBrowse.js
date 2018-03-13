@@ -1,36 +1,68 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createProduct } from '../../../ducks/reducer';
+import { createProduct, updateSearch } from '../../../ducks/reducer';
 import { Link } from '../../../imports';
 
 class WarehouseBrowse extends Component {
     render() {
+        let win = window.innerWidth > 1024;
         return (
-            <div>
-                {!this.props.productsLoading && this.props.products.length ? (
-                    <div>
-                        <h1>Warehouse Browse Page</h1>
-                        <Link to='/product/create'>
-                            <button>Enter New Product</button>
-                        </Link>
-                        {this.props.products.map((x,y) => {
-                            return (
-                                <div key={y}>
-                                    <Link to={`/product/display/${x.id}`}>
-                                        <h1>{x.name}</h1>
-                                    </Link>
-                                        <p>{x.stock} Left Instock</p>
-                                </div>
-                            )
-                        })}
-                    </div>
-                ) : <h1>Loading...</h1>}
-            </div>
+            win ? (
+                <div className='browse-container'>
+                    {!this.props.productsLoading && this.props.products.length ? (
+                        <div>
+                            <h1>Warehouse Browse Page</h1>
+                            <div className='search'>
+                                <input type='text' placeholder='Search...' onChange={e => this.props.updateSearch(e.target.value)}/>
+                                <Link to='/product/create' className='edit-product'>
+                                    Enter New Product
+                                </Link>
+                            </div>
+                            {this.props.products.filter(z => {
+                                return z.name.toLowerCase().includes(this.props.searchInput.toLowerCase());
+                            }).map((x,y) => {
+                                return (
+                                    <div key={y} className='browse-desktop'>
+                                        <Link to={`/product/display/${x.id}`}>
+                                            {x.name}
+                                        </Link>
+                                        <p className='price'>{x.stock} Left Instock</p>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    ) : <h1>Loading...</h1>}
+                </div>
+            ) : (
+                <div>
+                    {!this.props.productsLoading && this.props.products.length ? (
+                        <div className='browse-mobile'>
+                            <h1>Browse</h1>
+                            <input type='text' placeholder='Search...' onChange={e => this.props.updateSearch(e.target.value)}/>
+                            <Link to='/product/create' className='edit-test'>
+                                Enter New Product
+                            </Link>
+                            {this.props.products.filter(z => {
+                                return z.name.toLowerCase().includes(this.props.searchInput.toLowerCase());
+                            }).map((x,y) => {
+                                return (
+                                    <div key={y} className='product-mobile'>
+                                        <Link to={`/product/display/${x.id}`}>
+                                            {x.name}
+                                        </Link>
+                                            <p>{x.stock} Left Instock</p>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    ) : <h1>Loading...</h1>}
+                </div>
+            )
         )
     }
 }
 
 const mapStateToProps = state => state;
 
-export default connect(mapStateToProps, { createProduct })(WarehouseBrowse);
+export default connect(mapStateToProps, { createProduct, updateSearch })(WarehouseBrowse);

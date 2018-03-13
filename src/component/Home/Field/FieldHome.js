@@ -10,25 +10,44 @@ class FieldHome extends Component {
     }
 
     render() {
+        let win = window.innerWidth > 1024;
         return (
-            <div>
-                {!this.props.featuredLoading ? (
-                    <div>
-                        <h1>Field Home Page for {this.props.user}</h1>
-                        <h2>Featured Products:</h2>
-                        {this.props.featuredProducts.map((x,y) => {
-                            return (
-                                <div key={y}>
-                                    <Link to={`/product/display/${x.id}`}>
-                                        <p>{x.name}</p>
-                                    </Link>
-                                    <p>{x.description}</p>
-                                </div>
-                            )
-                        })}
-                    </div>  
-                ) : <Loading />
-                }
+            <div className='home-container'>
+                {win ? (
+                    !this.props.featuredLoading ? (
+                        <div>
+                            <h1>Field Home Page for {this.props.user}</h1>
+                            <h2>Featured Products:</h2>
+                            {this.props.featuredProducts.map((x,y) => {
+                                return (
+                                    <div key={y} className='featured-items'>
+                                        <Link to={`/product/display/${x.id}`}>
+                                            {x.name}
+                                        </Link>
+                                        <p>{x.description}</p>
+                                        <p className='price'>${x.price.toFixed(2)}</p>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    ) : <Loading /> ) : (
+                        !this.props.featuredLoading ? (
+                            <div className='home-mobile'>
+                                <h1>Welcome {this.props.user}</h1>
+                                <h2>Featured Products:</h2>
+                                {this. props.featuredProducts.map((x,y) => {
+                                    return (
+                                        <div key={y} className='featured-items-mobile'>
+                                            <Link to={`product/display/${x.id}`}>
+                                                {x.name}
+                                            </Link>
+                                            <p>{x.description}</p>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        ) : <Loading />
+                )}
             </div>
         )
     }

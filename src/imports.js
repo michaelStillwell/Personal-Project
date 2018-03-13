@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Switch, Route, Link } from 'react-router-dom';
 
+import Test from './test';
 import Header from './component/Header/Header';
 import LandingPage from './component/LandingPage/LandingPage';
 import Loading from './component/Loading/Loading';
@@ -25,6 +26,7 @@ export {
     Switch,
     Route,
     Link,
+    Test,
 
     Header,
     LandingPage,

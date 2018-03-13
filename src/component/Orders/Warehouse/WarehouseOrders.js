@@ -10,27 +10,49 @@ class WarehouseOrders extends Component {
     }
 
     render() {
+        let win = window.innerWidth > 1024;
         return (
-            <div>
-                { !this.props.ordersLoading ? (
-                    <div>
-                        { this.props.orders.length ? (
-                            <div>
-                                <h1>Warehouse Orders Page</h1>
-                                {this.props.orders.map((x,y) => {
-                                    return (
-                                        <div key={y}>
-                                            <Link to={`/order/warehouse/${x.username}/${x.order_id}`}>
-                                                <h1>{`${x.username} ${x.order_id}`}</h1>
-                                            </Link>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        ) : <h1>No Pending Orders</h1>
-                        }
-                    </div>
-                ) : <Loading />}
+            <div  className='order-container'>
+                {win ? (
+                    !this.props.ordersLoading ? (
+                        <div>
+                            { this.props.orders.length ? (
+                                <div>
+                                    <h1>Warehouse Orders Page</h1>
+                                    {this.props.orders.map((x,y) => {
+                                        return (
+                                            <div key={y}>
+                                                <Link to={`/order/warehouse/${x.username}/${x.order_id}`}>
+                                                    {`${x.username} ${x.order_id}`}
+                                                </Link>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            ) : <h1>No Pending Orders</h1>
+                            }
+                        </div>
+                    ) : <Loading />
+                ) : (
+                    !this.props.ordersLoading ? (
+                        <div className='order-mobile'>
+                            {this.props.orders.length ? (
+                                <div>
+                                    <h1>Orders</h1>
+                                    {this.props.orders.map((x,y) => {
+                                        return (
+                                            <div key={y}>
+                                                <Link to={`/order/warehouse/${x.username}/${x.order_id}`}>
+                                                    {`${x.username} ${x.order_id}`}
+                                                </Link>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            ) : <Loading />}
+                        </div>
+                    ) : <h1>No Pending Orders</h1>
+                )}
             </div>
         )
     }

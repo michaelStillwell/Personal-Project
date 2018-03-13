@@ -8,18 +8,19 @@ class DisplayProductCreate extends Component {
     render() {
         let send = {name: this.props.productsCreateName, description: this.props.productsCreateDescription, price: this.props.productsCreatePrice, stock: this.props.productsCreateStock};
         return (
-            <div>
-                <h1>Create New Product</h1>
+            <div className='display-product-create'>
+                <h2>Create New Product</h2>
                 <input 
                     type="text" 
+                    autoFocus
                     placeholder='Title' 
                     onChange={e => this.props.productsCreate('NAME', e.target.value)} 
                 />
-                <input 
+                <textarea 
                     type="text" 
                     placeholder='Description' 
                     onChange={e => this.props.productsCreate('DESCRIPTION', e.target.value)} 
-                />
+                ></textarea>
                 <input 
                     type="number" 
                     placeholder='Price' 

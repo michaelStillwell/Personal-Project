@@ -9,10 +9,10 @@ import {
     updateCurrentProduct,
     deleteCurrentProduct
 } from '../../ducks/reducer';
-import { Link } from '../../imports';
+import { Loading, Link } from '../../imports';
 
 class DisplayProduct extends Component {
-    componentDidMount() {
+    componentWillMount() {
         this.props.getCurrentProduct(this.props.match.params.id);
     }
 
@@ -23,89 +23,159 @@ class DisplayProduct extends Component {
                         price: this.props.currentProductEditPrice,
                         stock: this.props.currentProductEditStock
                     };
+        let win = window.innerWidth > 1024;
         switch(this.props.emp_type) {
             case 'Owner':
                 return (
-                    <div>
-                        <h1>Owner</h1>
-                        <div>
-                            <h2>{this.props.currentProduct.name}</h2>
+                    win ? (
+                        <div className='display-product-owner'>
+                            <h2 className='title'>{this.props.currentProduct.name}</h2>
                             <p>{this.props.currentProduct.description}</p>
-                            <p>{this.props.currentProduct.price}</p>
-                            <p>{this.props.currentProduct.stock}</p>
+                            <p className='price'>${this.props.currentProduct.price}</p>
+                            <p>Instock: {this.props.currentProduct.stock}</p>
                         </div>
-                    </div>
+                    ) : (
+                        <div className='display-product-owner-mobile'>
+                            <h2 className='title'>{this.props.currentProduct.name}</h2>
+                            <p>{this.props.currentProduct.description}</p>
+                            <p className='price'>${this.props.currentProduct.price}</p>
+                            <p className='stock'>Instock: {this.props.currentProduct.stock}</p>
+                        </div>
+                    )
                 )
 
             case 'Warehouse':
                 return (
-                    <div>
-                        {!this.props.currentProductEdit ? (
-                            <div>
-                                <h2>{this.props.currentProduct.name}</h2>
-                                <p>{this.props.currentProduct.description}</p>
-                                <p>{this.props.currentProduct.price}</p>
-                                <p>{this.props.currentProduct.stock}</p>
-                                <button 
-                                    onClick={() => this.props.toggleCurrentProductEdit(this.props.currentProductEdit)}
-                                    >Edit Product
-                                </button>
-                            </div>
-                        ) : (
-                            <div>
-                                <h1>Edit!</h1>
-                                <input 
-                                    type="text" 
-                                    placeholder='Title' 
-                                    onChange={e => this.props.editCurrentProduct('NAME', e.target.value)}
-                                    defaultValue={this.props.currentProduct.name}
-                                />
-                                <input 
-                                    type="text" 
-                                    placeholder='Description' 
-                                    onChange={e => this.props.editCurrentProduct('DESCRIPTION', e.target.value)}
-                                    defaultValue={this.props.currentProduct.description}
-                                />
-                                <input 
-                                    type="number" 
-                                    placeholder='Price' 
-                                    onChange={e => this.props.editCurrentProduct('PRICE', e.target.value)}
-                                    defaultValue={this.props.currentProduct.price}
-                                />
-                                <input 
-                                    type="number" 
-                                    placeholder='Stock' 
-                                    onChange={e => this.props.editCurrentProduct('STOCK', e.target.value)}
-                                    defaultValue={this.props.currentProduct.stock}
-                                />
-                                <button
-                                    onClick={() => {
-                                        this.props.toggleCurrentProductEdit(this.props.currentProductEdit);
-                                        this.props.updateCurrentProduct(this.props.match.params.id, send);
-                                    }}
-                                    >Update Product
-                                </button>
-                                <Link to='/browse'>
+                    win ? (
+                        <div>
+                            {!this.props.currentProductEdit ? (
+                                <div className='display-product-warehouse'>
+                                    <h2>{this.props.currentProduct.name}</h2>
+                                    <p>{this.props.currentProduct.description}</p>
+                                    <p className='price'>${this.props.currentProduct.price}</p>
+                                    <p>Instock: {this.props.currentProduct.stock}</p>
+                                    <button 
+                                        onClick={() => this.props.toggleCurrentProductEdit(this.props.currentProductEdit)}
+                                        >Edit Product
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className='display-product-warehouse'>
+                                    <h2>Edit!</h2>
+                                    <input 
+                                        type="text" 
+                                        placeholder='Title' 
+                                        onChange={e => this.props.editCurrentProduct('NAME', e.target.value)}
+                                        defaultValue={this.props.currentProduct.name}
+                                    />
+                                    <textarea 
+                                        type="text" 
+                                        placeholder='Description' 
+                                        onChange={e => this.props.editCurrentProduct('DESCRIPTION', e.target.value)}
+                                        defaultValue={this.props.currentProduct.description}
+                                    ></textarea>
+                                    <input 
+                                        type="number" 
+                                        placeholder='Price' 
+                                        onChange={e => this.props.editCurrentProduct('PRICE', e.target.value)}
+                                        defaultValue={this.props.currentProduct.price}
+                                    />
+                                    <input 
+                                        type="number" 
+                                        placeholder='Stock' 
+                                        onChange={e => this.props.editCurrentProduct('STOCK', e.target.value)}
+                                        defaultValue={this.props.currentProduct.stock}
+                                    />
                                     <button
                                         onClick={() => {
-                                            this.props.deleteCurrentProduct(this.props.match.params.id);
+                                            this.props.toggleCurrentProductEdit(this.props.currentProductEdit);
+                                            this.props.updateCurrentProduct(this.props.match.params.id, send);
                                         }}
-                                        >Delete Product
+                                        >Update Product
                                     </button>
-                                </Link>
-                            </div>
-                        )}
-                    </div>
+                                    <Link to='/browse'>
+                                        <button
+                                            onClick={() => {
+                                                this.props.deleteCurrentProduct(this.props.match.params.id);
+                                            }}
+                                            >Delete Product
+                                        </button>
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <div className='display-product-warehouse-mobile'>
+                            {!this.props.currentProductEdit ? (
+                                <div>
+                                    <h2 className='title'>{this.props.currentProduct.name}</h2>
+                                    <p>{this.props.currentProduct.description}</p>
+                                    <p className='price'>${this.props.currentProduct.price}</p>
+                                    <p className='stock'>{this.props.currentProduct.stock}</p>
+                                    <button
+                                        className='mobile-button'
+                                        onClick={() => this.props.toggleCurrentProductEdit(this.props.currentProductEdit)}                                    
+                                    >Edit</button>
+                                </div>
+                            ) : (
+                                <div>
+                                    <h2>Edit!</h2>
+                                    <input 
+                                        type="text" 
+                                        autoFocus
+                                        placeholder='Title' 
+                                        onChange={e => this.props.editCurrentProduct('NAME', e.target.value)}
+                                        defaultValue={this.props.currentProduct.name}
+                                    />
+                                    <textarea 
+                                        type="text" 
+                                        placeholder='Description'
+                                        col='40'
+                                        rows='3'
+                                        onChange={e => this.props.editCurrentProduct('DESCRIPTION', e.target.value)}
+                                        defaultValue={this.props.currentProduct.description}
+                                    ></textarea>
+                                    <input 
+                                        type="number" 
+                                        placeholder='Price' 
+                                        onChange={e => this.props.editCurrentProduct('PRICE', e.target.value)}
+                                        defaultValue={this.props.currentProduct.price}
+                                    />
+                                    <input 
+                                        type="number" 
+                                        placeholder='Stock' 
+                                        onChange={e => this.props.editCurrentProduct('STOCK', e.target.value)}
+                                        defaultValue={this.props.currentProduct.stock}
+                                    />
+                                    <button
+                                        onClick={() => {
+                                            this.props.toggleCurrentProductEdit(this.props.currentProductEdit);
+                                            this.props.updateCurrentProduct(this.props.match.params.id, send);
+                                        }}
+                                        >Update Product
+                                    </button>
+                                    <Link to='/browse'>
+                                        <button
+                                            onClick={() => {
+                                                this.props.deleteCurrentProduct(this.props.match.params.id);
+                                            }}
+                                            >Delete Product
+                                        </button>
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+                    )
                 )
 
             case 'Field':
                 return (
-                    <div>
+                    <div className='display-product-owner'>
                         <div>
-                            <h2>{this.props.currentProduct.name}</h2>
+                            <h2 className='title'>{this.props.currentProduct.name}</h2>
                             <p>{this.props.currentProduct.description}</p>
-                            <p>{this.props.currentProduct.price}</p>
-                            <p>{this.props.currentProduct.stock}</p> 
+                            <p className='price'>${this.props.currentProduct.price}</p>
+                            <p>Left Instock: {this.props.currentProduct.stock}</p> 
                         </div>
                         <button 
                             onClick={() => this.props.postNewOrder(this.props.user, this.props.currentProduct.id)}
@@ -122,10 +192,9 @@ class DisplayProduct extends Component {
     render() {
         return (
             <div>
-                <h1>Product</h1>
                 {!this.props.currentProductLoading ? (
                     this.conditionalRender()
-                ) : <h1>Loading...</h1>}
+                ) : <Loading />}
             </div>
         )
     }

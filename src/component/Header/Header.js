@@ -16,7 +16,6 @@ class Header extends Component {
             
             case 'Field':
                 return <FieldHeader />
-            
 
             default:
                 return <h1>Welcome</h1>;

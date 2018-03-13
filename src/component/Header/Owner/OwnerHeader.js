@@ -5,45 +5,54 @@ import { logoutUser } from '../../../ducks/reducer';
 import { Link } from '../../../imports';
 
 class FieldHeader extends Component {
-    getHamburger() {
-        let x = document.getElementById('hamburger');
-        if ( x.className === 'hamburger' ) {
-            x.className += ' toggle_on';
-        } else {
-            x.className = 'hamburger';
-        }
-        console.log(x.className)
-    }
-
     render() {
-        let win = window.innerWidth > 400;
+        let win = window.innerWidth > 1024;
         return (
             <div className='header-container'>
                 {
                     win ? (
-                        <h1>Header for the Owner</h1>
+                        <div>
+                            <h1 className='title'>Owner</h1>
+                            <nav className='menu-items'>
+                                <a href='#/'>
+                                    Home
+                                </a>
+                                <a href='#/browse'>
+                                    Browse
+                                </a>
+                                <a href='#/orders'>
+                                    Orders
+                                </a>
+                                <a href='#/employees'>
+                                    Employees
+                                </a>
+                                <a href='#/' onClick={() => this.props.logoutUser()}>
+                                    Logout
+                                </a>
+                            </nav>
+                        </div>
                     ) : (
-                        <h1>Owner</h1>
+                        <div className='hamburger-container'>
+                            <h1>Owner</h1>
+                            <nav>
+                                <div id='menuToggle'>
+                                    <input type='checkbox' />
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+
+                                    <ul id='menu'>
+                                        <a href="#"><li>Home</li></a>
+                                        <a href="#/browse"><li>Browse</li></a>
+                                        <a href="#/orders"><li>Orders</li></a>
+                                        <a href="#/employees"><li>Employees</li></a>
+                                        <a href="#" onClick={() => this.props.logoutUser()}><li>Logout</li></a>
+                                    </ul>                                    
+                                </div>
+                            </nav>
+                        </div>
                     )
                 }
-                <button id='hamburger' className='hamburger'onClick={this.getHamburger} />
-                <nav>
-                    <Link to='/'>
-                        <button>Home</button>
-                    </Link>
-                    <Link to='/browse'>
-                        <button>Browse</button>
-                    </Link>
-                    <Link to='/orders'>
-                        <button>Orders</button>
-                    </Link>
-                    <Link to='/employees'>
-                        <button>Employees</button>
-                    </Link>
-                    <Link to='/'>
-                    <button onClick={() => this.props.logoutUser()}>Logout</button>
-                    </Link>
-                </nav>
             </div>
         )
     }

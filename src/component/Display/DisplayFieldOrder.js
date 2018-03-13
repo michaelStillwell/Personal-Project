@@ -16,9 +16,9 @@ class DisplayOrder extends Component {
                 <h1>Display Order</h1>
                 {!this.props.currentOrderLoading ? this.props.currentOrder.map((x,y) => {
                     return (
-                        <div key={y}>
-                            <Link to={`/product/${x.product}`}>
-                                <h1>{x.name}</h1>
+                        <div key={y} className='order-container'>
+                            <Link to={`/product/display/${x.product}`}>
+                                {x.name}
                             </Link>
                         </div>
                     )
