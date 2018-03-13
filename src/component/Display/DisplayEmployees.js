@@ -10,24 +10,44 @@ class DisplayEmlpoyees extends Component {
     }
     
     render() {
+        let win = window.innerWidth > 1024;
         return (
-            <div>
-                {!this.props.employeesLoading && this.props.employees.length ? (
-                    <div>
-                        <h1>Employees Page</h1>
-                        {this.props.employees.map((x,y) => (
-                            <div key={y}>
-                                <h1>{x.username}</h1>
-                                <Link to={`/employee/edit/${x.id}`}>
-                                    <button>Edit User</button> 
-                                </Link>
-                            </div>
-                        ))}
-                        <Link to='/employee/create'>
-                            <button>Create User</button>
-                        </Link>
-                    </div>
-                ) : <Loading />}
+            <div className='employee-container'>
+                {win ? (
+                    !this.props.employeesLoading && this.props.employees.length ? (
+                        <div>
+                            <h1>Employees Page</h1>
+                            {this.props.employees.map((x,y) => (
+                                <div key={y} className='employee'>
+                                    <h2>{x.username}</h2>
+                                    <Link to={`/employee/edit/${x.id}`}>
+                                        Edit User
+                                    </Link>
+                                </div>
+                            ))}
+                            <Link to='/employee/create' className='create'>
+                                Create User
+                            </Link>
+                        </div>
+                    ) : <Loading />
+                ) : (
+                    !this.props.employeesLoading && this.employees.length ? (
+                        <div>
+                            <h1>Employees</h1>
+                            {this.props.employees.map((x,y) => (
+                                <div key={y}>
+                                    <h2>{x.username}</h2>
+                                    <Link to={`/employee/edit/${x.id}`}>
+                                        Edit
+                                    </Link>
+                                </div>
+                            ))}
+                            <Link to='/employee/create' className='create'>
+                                Create
+                            </Link>
+                        </div>
+                    ) : <Loading />
+                )}
             </div>
         )
     }

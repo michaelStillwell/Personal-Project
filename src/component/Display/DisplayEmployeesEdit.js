@@ -18,40 +18,76 @@ class DisplayEmployeeEdit extends Component {
                 password: this.props.employeesEditPassword, 
                 emp_type: this.props.employeesEditType
             }
+        let win = window.innerWidth > 1024;
         return (
-            <div>
-                <h1>Edit Page</h1>
-                {this.props.employees.length ? (
+            <div className='employee-edit-container'>
+                {win ? (
                     <div>
-                        <h1>Employee</h1>
-                        <h1>{employee[0].username}</h1>
-                        <input type="text" placeholder='Update Username' 
-                            onChange={e => this.props.updateUsernameEdit(e.target.value)}
-                            defaultValue={employee[0].username}
-                        />
-                        <input type="text" placeholder='Update Password' 
-                            onChange={e => this.props.updatePasswordEdit(e.target.value)}
-                            defaultValue={employee[0].password}
-                        />
-                        <h2>{employee[0].emp_type}</h2>
-                        <input type="text" placeholder='Update Type' 
-                            onChange={e => this.props.updateTypeEdit(e.target.value)}
-                            defaultValue={employee[0].emp_type}
-                        />
-                        <Link to='/employees'>
-                            <button 
-                                onClick={() => this.props.editEmployees(this.props.match.params.id, send)}
-                                >Update
-                            </button>
-                        </Link>
-                        <Link to='/employees'>
-                            <button 
-                                onClick={() => this.props.deleteEmployees(this.props.match.params.id)}
-                                >Delete
-                            </button>
-                        </Link>
+                        <h1>Edit Page</h1>
+                        {this.props.employees.length ? (
+                            <div>
+                                <h1>Employee</h1>
+                                <h2>{employee[0].username}</h2>
+                                <input type="text" placeholder='Update Username' 
+                                    onChange={e => this.props.updateUsernameEdit(e.target.value)}
+                                    defaultValue={employee[0].username}
+                                />
+                                <input type="text" placeholder='Update Password' 
+                                    onChange={e => this.props.updatePasswordEdit(e.target.value)}
+                                    defaultValue={employee[0].password}
+                                />
+                                <h3>{employee[0].emp_type}</h3>
+                                <input type="text" placeholder='Update Type' 
+                                    onChange={e => this.props.updateTypeEdit(e.target.value)}
+                                    defaultValue={employee[0].emp_type}
+                                />
+                                <Link to='/employees'
+                                        onClick={() => this.props.editEmployees(this.props.match.params.id, send)}
+                                        >Update
+                                </Link>
+                                <Link to='/employees'
+                                        onClick={() => this.props.deleteEmployees(this.props.match.params.id)}
+                                        >Delete
+                                </Link>
+                            </div>
+                        ) : <Loading />}
                     </div>
-                ) : <Loading />}
+                ) : (
+                    <div>
+                        <h1>Edit</h1>
+                            {this.props.employees.length ? (
+                                <div>
+                                    <h1>Employee</h1>
+                                    <h1>{employee[0].username}</h1>
+                                    <input type="text" placeholder='Update Username' 
+                                        onChange={e => this.props.updateUsernameEdit(e.target.value)}
+                                        defaultValue={employee[0].username}
+                                    />
+                                    <input type="text" placeholder='Update Password' 
+                                        onChange={e => this.props.updatePasswordEdit(e.target.value)}
+                                        defaultValue={employee[0].password}
+                                    />
+                                    <h2>{employee[0].emp_type}</h2>
+                                    <input type="text" placeholder='Update Type' 
+                                        onChange={e => this.props.updateTypeEdit(e.target.value)}
+                                        defaultValue={employee[0].emp_type}
+                                    />
+                                    <Link to='/employees'>
+                                        <button 
+                                            onClick={() => this.props.editEmployees(this.props.match.params.id, send)}
+                                            >Update
+                                        </button>
+                                    </Link>
+                                    <Link to='/employees'>
+                                        <button 
+                                            onClick={() => this.props.deleteEmployees(this.props.match.params.id)}
+                                            >Delete
+                                        </button>
+                                    </Link>
+                                </div>
+                            ) : <Loading />}
+                    </div>
+                )}
             </div>
         )
     }
