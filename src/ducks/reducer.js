@@ -2,48 +2,49 @@ import axios from 'axios';
 
 // Constants
 const
-    UPDATE_USERNAME = 'UPDATE_USERNAME',
-    UPDATE_USERNAME_EDIT = 'UPDATE_USERNAME_EDIT',
+    UPDATE_USERNAME        = 'UPDATE_USERNAME',
+    UPDATE_USERNAME_EDIT   = 'UPDATE_USERNAME_EDIT',
     UPDATE_USERNAME_CREATE = 'UPDATE_USERNAME_CREATE',
-    UPDATE_PASSWORD = 'UPDATE_PASSWORD',
+    UPDATE_PASSWORD        = 'UPDATE_PASSWORD',
     UPDATE_PASSWORD_CREATE = 'UPDATE_PASSWORD_CREATE',
-    UPDATE_PASSWORD_EDIT = 'UPDATE_PASSWORD_EDIT',
-    UPDATE_TYPE_CREATE = 'UPDATE_TYPE_CREATE',
-    UPDATE_TYPE_EDIT = 'UPDATE_TYPE_EDIT',
-    UPDATE_SEARCH = 'UPDATE_SEARCH',
+    UPDATE_PASSWORD_EDIT   = 'UPDATE_PASSWORD_EDIT',
+    UPDATE_TYPE_CREATE     = 'UPDATE_TYPE_CREATE',
+    UPDATE_TYPE_EDIT       = 'UPDATE_TYPE_EDIT',
+    UPDATE_SEARCH          = 'UPDATE_SEARCH',
     
-    AUTH_USER   = 'AUTH_USER',
+    AUTH_USER          = 'AUTH_USER',
+    INPUT_CURRENT_EDIT = 'INPUT_CURRENT_EDIT',
 
     GET_FEATURED_PRODUCTS = 'GET_FEATURED_PRODUCTS',
     
-    GET_PRODUCTS = 'GET_PRODUCTS',
-    GET_FIELD_ORDERS   = 'GET_FIELD_ORDERS',
-    GET_WAREHOUSE_ORDERS = 'GET_WAREHOUSE_ORDERS',
-    GET_PRODUCTS_BY_ORDER = 'GET_PRODUCST_BY_ORDER',
-    GET_CURRENT_PRODUCT = 'GET_CURRENT_PRODUCT',
-    CREATE_PRODUCT = 'CREATE_PRODUCT',
-    CREATE_PRODUCT_NAME = 'CREATE_PRODUCT_NAME',
+    GET_PRODUCTS               = 'GET_PRODUCTS',
+    GET_FIELD_ORDERS           = 'GET_FIELD_ORDERS',
+    GET_WAREHOUSE_ORDERS       = 'GET_WAREHOUSE_ORDERS',
+    GET_PRODUCTS_BY_ORDER      = 'GET_PRODUCST_BY_ORDER',
+    GET_CURRENT_PRODUCT        = 'GET_CURRENT_PRODUCT',
+    CREATE_PRODUCT             = 'CREATE_PRODUCT',
+    CREATE_PRODUCT_NAME        = 'CREATE_PRODUCT_NAME',
     CREATE_PRODUCT_DESCRIPTION = 'CREATE_PRODUCT_DESCRIPTION',
-    CREATE_PRODUCT_PRICE = 'CREATE_PRODUCT_PRICE',
-    CREATE_PRODUCT_STOCK = 'CREATE_PRODUCT_STOCK',
-    EDIT_PRODUCT_NAME = 'EDIT_PRODUCT_NAME',
-    EDIT_PRODUCT_DESCRIPTION = 'EDIT_PRODUCT_DESCRIPTION',
-    EDIT_PRODUCT_PRICE = 'EDIT_PRODUCT_PRICE',
-    EDIT_PRODUCT_STOCK = 'EDIT_PRODUCT_STOCK',
-    EDIT_PRODUCT_UPDATE = 'EDIT_PRODUCT_UPDATE',
-    DELETE_PRODUCT = 'DELETE_PRODUCT',
-    TOGGLE_PRODUCT_EDIT = 'TOGGLE_PRODUCT_EDIT',
+    CREATE_PRODUCT_PRICE       = 'CREATE_PRODUCT_PRICE',
+    CREATE_PRODUCT_STOCK       = 'CREATE_PRODUCT_STOCK',
+    EDIT_PRODUCT_NAME          = 'EDIT_PRODUCT_NAME',
+    EDIT_PRODUCT_DESCRIPTION   = 'EDIT_PRODUCT_DESCRIPTION',
+    EDIT_PRODUCT_PRICE         = 'EDIT_PRODUCT_PRICE',
+    EDIT_PRODUCT_STOCK         = 'EDIT_PRODUCT_STOCK',
+    EDIT_PRODUCT_UPDATE        = 'EDIT_PRODUCT_UPDATE',
+    DELETE_PRODUCT             = 'DELETE_PRODUCT',
+    TOGGLE_PRODUCT_EDIT        = 'TOGGLE_PRODUCT_EDIT',
 
-    GET_NEW_ORDER = 'GET_NEW_ORDER',
-    GET_NEW_ORDER_PRODUCTS = 'GET_NEW_ORDER_PRODUCTS',
-    POST_NEW_ORDER = 'POST_NEW_ORDER',
-    REMOVE_FROM_NEW_ORDER = 'REMOVE_FROM_NEW_ORDER',
+    GET_NEW_ORDER             = 'GET_NEW_ORDER',
+    GET_NEW_ORDER_PRODUCTS    = 'GET_NEW_ORDER_PRODUCTS',
+    POST_NEW_ORDER            = 'POST_NEW_ORDER',
+    REMOVE_FROM_NEW_ORDER     = 'REMOVE_FROM_NEW_ORDER',
     REMOVE_ALL_FROM_NEW_ORDER = 'REMOVE_ALL_FROM_NEW_ORDER',
-    PLACE_ORDER = 'PLACE_ORDER',
+    PLACE_ORDER               = 'PLACE_ORDER',
 
-    GET_EMPLOYEES = 'GET_EMPLOYEES',
+    GET_EMPLOYEES    = 'GET_EMPLOYEES',
     CREATE_EMPLOYEES = 'CREATE_EMPLOYEES',
-    EDIT_EMPLOYEES = 'EDIT_EMPLOYEES',
+    EDIT_EMPLOYEES   = 'EDIT_EMPLOYEES',
     DELETE_EMPLOYEES = 'DELETE_EMPLOYEES',
     
     MARK_AS_COMPLETE = 'MARK_AS_COMPLETE';
@@ -263,6 +264,13 @@ export function toggleCurrentProductEdit(edit) {
     }
 }
 
+export function inputCurrentInfo(name, desc, price, stock) {
+    return {
+        type: INPUT_CURRENT_EDIT,
+        payload: {name, desc, price, stock}
+    }
+}
+
 export function editCurrentProduct(input, val) {
     console.log(input, val);
     return {
@@ -282,7 +290,6 @@ export function updateCurrentProduct(id, send) {
 }
 
 export function deleteCurrentProduct(id) {
-    console.log('hi1')
     return {
         type: DELETE_PRODUCT,
         payload:
@@ -476,6 +483,14 @@ export default function reducer(state = initialState, action) {
 
         case UPDATE_SEARCH:
             return Object.assign({}, state, { searchInput: action.payload });
+
+        case INPUT_CURRENT_EDIT:
+            return Object.assign({}, state, { 
+                                                currentProductEditName: action.payload.name,
+                                                currentProductEditDescription: action.payload.desc,
+                                                currentProductEditPrice: action.payload.price,
+                                                currentProductEditStock: action.payload.stock
+                                            })
 
         case CREATE_PRODUCT_NAME:
             return Object.assign({}, state, { productsCreateName: action.payload });

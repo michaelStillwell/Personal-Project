@@ -13,10 +13,10 @@ class WarehouseHeader extends Component {
                     <div>
                         <h1 className='title'>Warehouse</h1>
                         <nav className='menu-items'>
-                            <a href='#/'>Home</a>
-                            <a href='#/browse'>Browse</a>
-                            <a href='#/orders'>Orders</a> 
-                            <a href='#/' onClick={() => this.props.logoutUser()}>Logout</a>
+                            <Link to='/'>Home</Link>
+                            <Link to='/browse'>Browse</Link>
+                            <Link to='/orders'>Orders</Link> 
+                            <Link to='/' onClick={() => this.props.logoutUser()}>Logout</Link>
                         </nav>
                     </div>
                 ) : (
@@ -30,10 +30,10 @@ class WarehouseHeader extends Component {
                                 <span></span>
 
                                 <ul id='menu'>
-                                    <a href="#"><li>Home</li></a>
-                                    <a href="#/browse"><li>Browse</li></a>
-                                    <a href="#/orders"><li>Orders</li></a>
-                                    <a href="#"><li>Logout</li></a>
+                                    <Link to="/"><li>Home</li></Link>
+                                    <Link to="/browse"><li>Browse</li></Link>
+                                    <Link to="/orders"><li>Orders</li></Link>
+                                    <Link to="/"><li>Logout</li></Link>
                                 </ul>
                             </div>
                         </nav>

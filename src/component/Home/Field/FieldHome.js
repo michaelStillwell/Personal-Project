@@ -35,7 +35,7 @@ class FieldHome extends Component {
                             <div className='home-mobile'>
                                 <h1>Welcome {this.props.user}</h1>
                                 <h2>Featured Products:</h2>
-                                {this. props.featuredProducts.map((x,y) => {
+                                {this.props.featuredProducts.map((x,y) => {
                                     return (
                                         <div key={y} className='featured-items-mobile'>
                                             <Link to={`product/display/${x.id}`}>

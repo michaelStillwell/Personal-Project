@@ -217,7 +217,7 @@ body {
     h1 {
         margin: 0;
         padding: 0;
-    }
+    }   
 
     .product-mobile {
         font-size: 32px;
@@ -689,5 +689,15 @@ body {
     h1 {
         font-size: 48px;
         color: red;
+    }
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        height: 50vh;
     }
 }

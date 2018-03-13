@@ -14,21 +14,21 @@ class FieldHeader extends Component {
                         <div>
                             <h1 className='title'>Owner</h1>
                             <nav className='menu-items'>
-                                <a href='#/'>
+                                <Link to='/'>
                                     Home
-                                </a>
-                                <a href='#/browse'>
+                                </Link>
+                                <Link to='/browse'>
                                     Browse
-                                </a>
-                                <a href='#/orders'>
+                                </Link>
+                                <Link to='/orders'>
                                     Orders
-                                </a>
-                                <a href='#/employees'>
+                                </Link>
+                                <Link to='/employees'>
                                     Employees
-                                </a>
-                                <a href='#/' onClick={() => this.props.logoutUser()}>
+                                </Link>
+                                <Link to='/' onClick={() => this.props.logoutUser()}>
                                     Logout
-                                </a>
+                                </Link>
                             </nav>
                         </div>
                     ) : (
@@ -42,11 +42,11 @@ class FieldHeader extends Component {
                                     <span></span>
 
                                     <ul id='menu'>
-                                        <a href="#"><li>Home</li></a>
-                                        <a href="#/browse"><li>Browse</li></a>
-                                        <a href="#/orders"><li>Orders</li></a>
-                                        <a href="#/employees"><li>Employees</li></a>
-                                        <a href="#" onClick={() => this.props.logoutUser()}><li>Logout</li></a>
+                                        <Link to="/"><li>Home</li></Link>
+                                        <Link to="/browse"><li>Browse</li></Link>
+                                        <Link to="/orders"><li>Orders</li></Link>
+                                        <Link to="/employees"><li>Employees</li></Link>
+                                        <Link to="/" onClick={() => this.props.logoutUser()}><li>Logout</li></Link>
                                     </ul>                                    
                                 </div>
                             </nav>

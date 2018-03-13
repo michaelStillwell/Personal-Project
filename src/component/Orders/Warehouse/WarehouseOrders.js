@@ -11,6 +11,7 @@ class WarehouseOrders extends Component {
 
     render() {
         let win = window.innerWidth > 1024;
+        console.log(this.props.ordersLoading);
         return (
             <div  className='order-container'>
                 {win ? (
@@ -34,7 +35,7 @@ class WarehouseOrders extends Component {
                         </div>
                     ) : <Loading />
                 ) : (
-                    !this.props.ordersLoading ? (
+                    this.props.ordersLoading ? (
                         <div className='order-mobile'>
                             {this.props.orders.length ? (
                                 <div>

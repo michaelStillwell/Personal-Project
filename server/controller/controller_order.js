@@ -6,6 +6,7 @@ module.exports = {
         db.getFieldOrders([req.params.id])
             .then(response => res.status(200).json(response))
             .catch(err => console.log(err));
+            console.log('GET FIELD ORDERS');
     },
 
     getWarehouseOrders: (req, res, next) => {
@@ -14,7 +15,8 @@ module.exports = {
 
         db.getWarehouseOrders()
             .then(response => res.status(200).json(response))
-            .catch(err => console.log(err));
+            .catch(err => console.log('GET WAREHOUSE ORDESR: ', err));
+        console.log('GET WAREHOUSE ORDERS');
     },
 
     getNewOrder: (req, res, next) => {
@@ -23,7 +25,8 @@ module.exports = {
         
         db.getNewOrder([req.params.user])
             .then(response => res.status(200).json(response))
-            .catch(err => console.log(err));
+            .catch(err => console.log('GET NEW ORDER', err));
+        console.log('GET NEW ORDER');
     },
 
     postToNewOrder: (req, res, next) => {
@@ -32,7 +35,8 @@ module.exports = {
 
         db.postToNewOrder([req.params.user, req.params.product])
             .then(() => res.status(200))
-            .catch(err => console.log(err));
+            .catch(err => console.log('POST TO NEW ORDER', err));
+        console.log('POST TO NEW ORDER');
     },
 
     removeFromNewOrder: (req, res, next) => {

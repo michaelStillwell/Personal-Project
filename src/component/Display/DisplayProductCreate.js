@@ -7,8 +7,10 @@ import { Link } from '../../imports';
 class DisplayProductCreate extends Component {
     render() {
         let send = {name: this.props.productsCreateName, description: this.props.productsCreateDescription, price: this.props.productsCreatePrice, stock: this.props.productsCreateStock};
+        // let win = window.innerWidth > 1024;
         return (
             <div className='display-product-create'>
+                
                 <h2>Create New Product</h2>
                 <input 
                     type="text" 

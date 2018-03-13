@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { 
     getCurrentProduct, 
+    inputCurrentInfo,
     postNewOrder,
     toggleCurrentProductEdit,
     editCurrentProduct,
@@ -55,7 +56,14 @@ class DisplayProduct extends Component {
                                     <p className='price'>${this.props.currentProduct.price}</p>
                                     <p>Instock: {this.props.currentProduct.stock}</p>
                                     <button 
-                                        onClick={() => this.props.toggleCurrentProductEdit(this.props.currentProductEdit)}
+                                        onClick={() => {
+                                            this.props.toggleCurrentProductEdit(this.props.currentProductEdit);
+                                            this.props.inputCurrentInfo(
+                                                this.props.currentProduct.name, 
+                                                this.props.currentProduct.description, 
+                                                this.props.currentProduct.price,
+                                                this.props.currentProduct.stockf);
+                                        }}
                                         >Edit Product
                                     </button>
                                 </div>
@@ -114,7 +122,14 @@ class DisplayProduct extends Component {
                                     <p className='stock'>{this.props.currentProduct.stock}</p>
                                     <button
                                         className='mobile-button'
-                                        onClick={() => this.props.toggleCurrentProductEdit(this.props.currentProductEdit)}                                    
+                                        onClick={() => {
+                                            this.props.toggleCurrentProductEdit(this.props.currentProductEdit);
+                                            this.props.inputCurrentInfo(
+                                                this.props.currentProduct.name, 
+                                                this.props.currentProduct.description, 
+                                                this.props.currentProduct.price,
+                                                this.props.currentProduct.stockf);
+                                        }}
                                     >Edit</button>
                                 </div>
                             ) : (
@@ -151,6 +166,7 @@ class DisplayProduct extends Component {
                                         onClick={() => {
                                             this.props.toggleCurrentProductEdit(this.props.currentProductEdit);
                                             this.props.updateCurrentProduct(this.props.match.params.id, send);
+                                            window.location.reload();
                                         }}
                                         >Update Product
                                     </button>
@@ -204,5 +220,6 @@ const mapStateToProps = state => state;
 
 export default connect(mapStateToProps, { 
                                             getCurrentProduct, postNewOrder, toggleCurrentProductEdit, 
-                                            editCurrentProduct, updateCurrentProduct, deleteCurrentProduct
+                                            editCurrentProduct, updateCurrentProduct, deleteCurrentProduct,
+                                            inputCurrentInfo
                                         })(DisplayProduct);

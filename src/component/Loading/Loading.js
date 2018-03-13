@@ -1,11 +1,12 @@
 // React Imports
 import React, { Component } from 'react';
+import logo from '../../Assets/giphy.gif';
 
 class Loading extends Component {
     render() {
         return (
-            <div>
-                <h1>Loading...</h1>
+            <div className='loading'>
+                <img src={logo} alt="loading"/>
             </div>
         )
     }

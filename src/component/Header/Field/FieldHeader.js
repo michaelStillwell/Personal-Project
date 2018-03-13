@@ -37,10 +37,10 @@ class FieldHeader extends Component {
                                     <span></span>
 
                                     <ul id='menu'>
-                                        <a href="#"><li>Home</li></a>
-                                        <a href="#/browse"><li>Browse</li></a>
-                                        <a href="#orders"><li>Orders</li></a>
-                                        <a href="#" onClick={() => this.props.logoutUser()}><li>Logout</li></a>
+                                        <Link to="/"><li>Home</li></Link>
+                                        <Link to="/browse"><li>Browse</li></Link>
+                                        <Link to="/orders"><li>Orders</li></Link>
+                                        <Link to="/" onClick={() => this.props.logoutUser()}><li>Logout</li></Link>
                                     </ul>                                
                                 </div>
                             </nav>
