@@ -17,6 +17,7 @@ import DisplayProductCreate from './component/Display/DisplayProductCreate';
 import DisplayEmployees from './component/Display/DisplayEmployees';
 import DisplayEmployeesCreate from './component/Display/DisplayEmployeeCreate'; 
 import DisplayEmployeesEdit from './component/Display/DisplayEmployeesEdit';
+import DisplayFeatured from './component/Display/DisplayFeatured';
 import NoPage from './component/NoPage/NoPage';
 
 import Map from './component/Map/Map';
@@ -43,6 +44,7 @@ export {
     DisplayEmployees,
     DisplayEmployeesCreate,
     DisplayEmployeesEdit,
+    DisplayFeatured,
     NoPage,
 
     Map,

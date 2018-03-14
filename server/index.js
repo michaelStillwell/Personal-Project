@@ -16,7 +16,8 @@ const
 
     {
         getFeatured,
-
+        postFeatured,
+        deleteFeatured
     } = require('./controller/controller_featured'),
 
     {
@@ -111,6 +112,8 @@ app.get('/api/session', function(req, res, next) {
 app.post('/api/auth', login);
 
 app.get('/api/featured', getFeatured);
+app.post('/api/featured/:product', postFeatured);
+app.delete('/api/featured/delete/:product', deleteFeatured);
 
 app.get('/api/products', getProducts);
 app.get('/api/product/:id', getCurrentProduct);

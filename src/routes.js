@@ -6,8 +6,8 @@ import {
     LandingPage, Home, Browse, 
     Orders, FieldNewOrder, DisplayFieldOrder, 
     DisplayWarehouseOrder, DisplayProduct, DisplayEmployees,
-    DisplayEmployeesCreate, DisplayEmployeesEdit, DisplayProductCreate,
-    NoPage,
+    DisplayEmployeesCreate, DisplayEmployeesEdit, DisplayFeatured,
+    DisplayProductCreate, NoPage,
     Map,
 } from './imports';
 
@@ -25,6 +25,7 @@ export default (
         <Route path='/employees' component={DisplayEmployees} />
         <Route path='/employee/create' component={DisplayEmployeesCreate} />
         <Route path='/employee/edit/:id' component={DisplayEmployeesEdit} />
+        <Route path='/featured' component={DisplayFeatured} />
         <Route path='/map' component={Map} />
         <Route path='/test' component={Test} />
         <Route path='*' component={NoPage} />

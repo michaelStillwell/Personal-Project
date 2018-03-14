@@ -15,7 +15,9 @@ const
     AUTH_USER          = 'AUTH_USER',
     INPUT_CURRENT_EDIT = 'INPUT_CURRENT_EDIT',
 
-    GET_FEATURED_PRODUCTS = 'GET_FEATURED_PRODUCTS',
+    GET_FEATURED_PRODUCTS    = 'GET_FEATURED_PRODUCTS',
+    POST_FEATURED_PRODUCTS   = 'POST_FEATURED_PRODUCTS',
+    DELETE_FEATURED_PRODUCTS = 'DELETE_FEATURED_PRODUCTS',
     
     GET_PRODUCTS               = 'GET_PRODUCTS',
     GET_FIELD_ORDERS           = 'GET_FIELD_ORDERS',
@@ -62,7 +64,9 @@ const initialState = {
     isLoading: false,
 
     featuredProducts: [],
+    featuredCurrentProduct: 0,
     featuredLoading: false,
+    featuredPostLoading: false,
 
     products: [],
     productsLoading: false,
@@ -448,6 +452,28 @@ export function getFeaturedProducts() {
     }
 }
 
+export function postFeaturedProduct(product) {
+    return {
+        type: POST_FEATURED_PRODUCTS,
+        payload: 
+            axios
+                .post(`/api/featured/${product}`)
+                .then(console.log('worked hopefully'))
+                .catch(err => console.log('POST FEATURED: ', err))
+    }
+}
+
+export function deleteFeaturedProduct(product) {
+    return {
+        type: DELETE_FEATURED_PRODUCTS,
+        payload: 
+            axios
+                .delete(`/api/featured/delete/${product}`)
+                .then(console.log('worked hopefully'))
+                .catch(err => console.log('DELETE FEATURE: ', err))
+    }
+}
+
 export function logoutUser() {
     window.location.href = window.location.origin + '#/';
     window.location.reload();
@@ -534,6 +560,15 @@ export default function reducer(state = initialState, action) {
 
         case `${GET_FEATURED_PRODUCTS}_REJECTED`:
             return Object.assign({}, state, { featuredLoading: false });
+
+        case `${POST_FEATURED_PRODUCTS}_PENDING`:
+            return Object.assign({}, state, { featuredPostLoading: true });
+        
+        case `${POST_FEATURED_PRODUCTS}_FULFILLED`:
+            return Object.assign({}, state, { featuredPostLoading: false });
+        
+        case `${POST_FEATURED_PRODUCTS}_REJECTED`:
+            return Object.assign({}, state, { featuredPostLoading: false });
 
         case `${GET_PRODUCTS}_PENDING`:
             return Object.assign({}, state, { productsLoading: true });

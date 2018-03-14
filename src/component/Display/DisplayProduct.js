@@ -8,13 +8,17 @@ import {
     toggleCurrentProductEdit,
     editCurrentProduct,
     updateCurrentProduct,
-    deleteCurrentProduct
+    deleteCurrentProduct,
+    getFeaturedProducts,
+    postFeaturedProduct,
+    deleteFeaturedProduct
 } from '../../ducks/reducer';
 import { Loading, Link } from '../../imports';
 
 class DisplayProduct extends Component {
     componentWillMount() {
         this.props.getCurrentProduct(this.props.match.params.id);
+        this.props.getFeaturedProducts();
     }
 
     conditionalRender() {
@@ -66,6 +70,17 @@ class DisplayProduct extends Component {
                                         }}
                                         >Edit Product
                                     </button>
+                                    {this.props.featuredProducts.filter(x => x.id === this.props.currentProduct.id).length ? (
+                                        <button
+                                            onClick={() => this.props.deleteFeaturedProduct(this.props.currentProduct.id)}
+                                            >Remove from Featured
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={() => this.props.postFeaturedProduct(this.props.currentProduct.id)}
+                                            >Add to Featured
+                                        </button>
+                                    )}
                                 </div>
                             ) : (
                                 <div className='display-product-warehouse'>
@@ -221,5 +236,6 @@ const mapStateToProps = state => state;
 export default connect(mapStateToProps, { 
                                             getCurrentProduct, postNewOrder, toggleCurrentProductEdit, 
                                             editCurrentProduct, updateCurrentProduct, deleteCurrentProduct,
-                                            inputCurrentInfo
+                                            inputCurrentInfo, getFeaturedProducts, postFeaturedProduct,
+                                            deleteFeaturedProduct
                                         })(DisplayProduct);

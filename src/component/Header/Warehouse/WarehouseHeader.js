@@ -16,6 +16,7 @@ class WarehouseHeader extends Component {
                             <Link to='/'>Home</Link>
                             <Link to='/browse'>Browse</Link>
                             <Link to='/orders'>Orders</Link> 
+                            <Link to='/featured'>Featured</Link> 
                             <Link to='/' onClick={() => this.props.logoutUser()}>Logout</Link>
                         </nav>
                     </div>
@@ -33,6 +34,7 @@ class WarehouseHeader extends Component {
                                     <Link to="/"><li>Home</li></Link>
                                     <Link to="/browse"><li>Browse</li></Link>
                                     <Link to="/orders"><li>Orders</li></Link>
+                                    <Link to="/featured"><li>Featured</li></Link>
                                     <Link to="/"><li>Logout</li></Link>
                                 </ul>
                             </div>

@@ -190,19 +190,31 @@ body {
 
 .browse-desktop {
     display: flex;
+    justify-content: flex-end;
     margin: 20px 10px;
     border: solid 3px #303030;
     border-radius: 3px;
     padding: 5px 0;
-    height: 8vw;
-
+    height: 13vw;
+    
     a {
-        width: 25vw;
-        overflow: hidden;
+        text-align: center;
+        flex-grow: 2;
+        transition: 500ms ease;
+
+        &:hover {
+            border: solid 3px white;
+            padding: 4% 0;
+            text-decoration: underline;
+        }
     }
 
     p {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
         width: 25vw;
+        margin: 0 10px;
     }
 }
 
@@ -449,7 +461,7 @@ body {
 
 .display-product-warehouse {
     padding: 10px 20px;
-
+    
     .price {
         color: $price;
     }
@@ -774,5 +786,13 @@ body {
         margin: 20px 10px;
         border-top: solid 2px white;
         font-size: 32px;
+    }
+}
+
+.featured-container {
+    a {
+        color: white;
+        text-decoration: none;
+        margin: 10px;
     }
 }
