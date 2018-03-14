@@ -18,7 +18,7 @@ class Header extends Component {
                 return <FieldHeader />
 
             default:
-                return <h1>Welcome</h1>;
+                return <h1 className='header-default' style={{'display': 'hidden'}}>Welcome</h1>;
         }
     }
 }

@@ -11,7 +11,9 @@ class WarehouseHeader extends Component {
             <div className='header-container'>
                 {win ? (
                     <div>
-                        <h1 className='title'>Warehouse</h1>
+                        <div className='title'>
+                            <h1>Warehouse</h1>
+                        </div>
                         <nav className='menu-items'>
                             <Link to='/'>Home</Link>
                             <Link to='/browse'>Browse</Link>
@@ -22,21 +24,26 @@ class WarehouseHeader extends Component {
                     </div>
                 ) : (
                     <div className='hamburger-container'>
-                        <h1>Warehouse</h1>
+                        <div className='title'>
+                            <h1>Warehouse</h1>
+                        </div>
                         <nav>
                             <div id='menuToggle'>
-                                <input type='checkbox'/>
+                                <input id='input' type='checkbox'/>
                                 <span></span>
                                 <span></span>
                                 <span></span>
 
                                 <ul id='menu'>
-                                    <Link to="/"><li>Home</li></Link>
-                                    <Link to="/browse"><li>Browse</li></Link>
-                                    <Link to="/orders"><li>Orders</li></Link>
-                                    <Link to="/featured"><li>Featured</li></Link>
-                                    <Link to="/"><li>Logout</li></Link>
-                                </ul>
+                                <Link to="/" onClick={() => document.getElementById('input').checked = false}><li>Home</li></Link>
+                                <Link to="/browse" onClick={() => document.getElementById('input').checked = false}><li>Browse</li></Link>
+                                <Link to="/orders" onClick={() => document.getElementById('input').checked = false}><li>Orders</li></Link>
+                                <Link to="/featured" onClick={() => document.getElementById('input').checked = false}><li>Featured</li></Link>
+                                <Link to="/" onClick={() => {
+                                        document.getElementById('input').checked = false;
+                                        this.props.logoutUser()
+                                }}><li>Logout</li></Link>
+                                </ul>                                
                             </div>
                         </nav>
                     </div>

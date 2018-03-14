@@ -7,7 +7,6 @@ import { Loading, Link } from '../../../imports';
 class WarehouseBrowse extends Component {
     render() {
         let win = window.innerWidth > 1024;
-        console.log(this.props);
         return (
             win ? (
                 <div className='browse-container'>

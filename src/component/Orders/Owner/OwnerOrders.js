@@ -21,7 +21,7 @@ class WarehouseOrders extends Component {
                                     <h1>Owner's Orders Page</h1>
                                     {this.props.orders.map((x,y) => {
                                         return (
-                                            <div key={y}>
+                                            <div key={y} className='order-link'>
                                                 <Link to={`/order/warehouse/${x.username}/${x.order_id}`}>
                                                     {`${x.username} ${x.order_id}`}
                                                 </Link>

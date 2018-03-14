@@ -309,7 +309,7 @@ export function createProduct(send) {
         payload: 
             axios
                 .post('/api/products/create', send)
-                .then(() => window.reload())
+                .then(() => window.location.reload())
                 .catch(err => console.log('CREATE PRODUCT: ', err))
     }
 }
@@ -390,7 +390,6 @@ export function placeOrder(order, send) {
             axios
                 .post(`/api/orders/create/${order}`, send)
                 .then(() => {
-                    alert('Order Placed!');
                     window.location.reload();
                 })
                 .catch(err => console.log('PLACE ORDER: ', err))
@@ -414,7 +413,6 @@ export function createEmployees(send) {
         paylaod:
             axios
                 .post('/api/employees/create', send)
-                .then(response => console.log(response))
                 .catch(err => console.log('CREATE EMPLOYEES: ', err))
     }
 }

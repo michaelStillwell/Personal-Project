@@ -22,7 +22,7 @@ class DisplayWarehouseOrder extends  Component {
                             <h2>Products: </h2>
                             {this.props.currentOrder.map((x,y) => {
                                 return (
-                                    <div key={y}>
+                                    <div key={y} className='product-link'>
                                         <Link to={`/product/display/${x.product}`}>
                                             {x.name}
                                         </Link>

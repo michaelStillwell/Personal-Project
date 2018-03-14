@@ -34,7 +34,10 @@ class DisplayProductCreate extends Component {
                     onChange={e => this.props.productsCreate('STOCK', e.target.value)} 
                 />
                 <Link to='/browse'>
-                    <button onClick={() => this.props.createProduct(send)}>Submit New Product</button>
+                    <button onClick={() => {
+                        this.props.createProduct(send);
+                        {/* window.location.reload(); */}
+                    }}>Submit New Product</button>
                 </Link>
             </div>
         )

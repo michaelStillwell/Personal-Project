@@ -72,12 +72,18 @@ class DisplayProduct extends Component {
                                     </button>
                                     {this.props.featuredProducts.filter(x => x.id === this.props.currentProduct.id).length ? (
                                         <button
-                                            onClick={() => this.props.deleteFeaturedProduct(this.props.currentProduct.id)}
+                                            onClick={() => {
+                                                this.props.deleteFeaturedProduct(this.props.currentProduct.id);
+                                                window.location.reload();
+                                            }}
                                             >Remove from Featured
                                         </button>
                                     ) : (
                                         <button
-                                            onClick={() => this.props.postFeaturedProduct(this.props.currentProduct.id)}
+                                            onClick={() => {
+                                                this.props.postFeaturedProduct(this.props.currentProduct.id);
+                                                window.location.reload();
+                                            }}
                                             >Add to Featured
                                         </button>
                                     )}
@@ -113,6 +119,7 @@ class DisplayProduct extends Component {
                                         onClick={() => {
                                             this.props.toggleCurrentProductEdit(this.props.currentProductEdit);
                                             this.props.updateCurrentProduct(this.props.match.params.id, send);
+                                            window.location.reload();
                                         }}
                                         >Update Product
                                     </button>
@@ -120,6 +127,7 @@ class DisplayProduct extends Component {
                                         <button
                                             onClick={() => {
                                                 this.props.deleteCurrentProduct(this.props.match.params.id);
+                                                window.location.reload();
                                             }}
                                             >Delete Product
                                         </button>
@@ -202,16 +210,18 @@ class DisplayProduct extends Component {
             case 'Field':
                 return (
                     <div className='display-product-owner'>
-                        <div>
+                        <div className='content'>
                             <h2 className='title'>{this.props.currentProduct.name}</h2>
                             <p>{this.props.currentProduct.description}</p>
                             <p className='price'>${this.props.currentProduct.price}</p>
                             <p>Left Instock: {this.props.currentProduct.stock}</p> 
                         </div>
-                        <button 
-                            onClick={() => this.props.postNewOrder(this.props.user, this.props.currentProduct.id)}
-                            >Add to Order
-                        </button>
+                        <Link to='/browse'>
+                            <button 
+                                onClick={() => this.props.postNewOrder(this.props.user, this.props.currentProduct.id)}
+                                >Add to Order
+                            </button>
+                        </Link>
                     </div>
                 )
 
