@@ -6,7 +6,7 @@ const
     cors     = require('cors'),
     { json } = require('body-parser'),
     passport = require('passport'),
-    Auth0    = require('passport-auth0')
+    Auth0    = require('passport-auth0'),
     app      = express(),
     port     = process.env.PORT || 3223,
     
@@ -56,6 +56,8 @@ const
         CLIENT_SECRET,
     } = process.env;
 
+app.use(express.static(`${__dirname}/../build`));
+
 app.use(cors());
 app.use(json());
 
@@ -67,7 +69,7 @@ app.use(session(
     {
         secret: SESSION_SECRET,
         resave: false,
-        saveUnitialized: false,
+        saveUnitialized: true,
         cookie: {
             maxAge: 3600000,
         },
@@ -140,6 +142,11 @@ app.delete('/api/employees/delete/:id', deleteEmployees);
 
 app.get('/api/test', function(req, res, next) {
     res.status(200).json({ message: 'worked' });
+})
+
+const path = require('path');
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'));
 })
 
 app.listen(port, () => console.log(`Listening to port ${port} radio!`));
