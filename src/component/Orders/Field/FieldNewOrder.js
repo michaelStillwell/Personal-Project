@@ -1,7 +1,7 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getNewOrderProducts } from '../../../ducks/reducer';
+import { getNewOrderProducts } from '../../../ducks/reducer_order';
 
 class FieldNewOrder extends Component {
     render() {

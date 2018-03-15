@@ -21,7 +21,6 @@ module.exports = {
         const 
             db = req.app.get('db');
 
-        console.log(req.body.emp_type);
         db.createEmployees([req.body.username, req.body.password, req.body.emp_type])
             .then(response => res.status(200))
             .catch(err => console.log('CREATE EMPLOYEES: ', err));

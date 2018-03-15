@@ -1,7 +1,7 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateSearch } from '../../../ducks/reducer';
+import { updateSearch } from '../../../ducks/reducer_product';
 import {Loading, Link } from '../../../imports';
 
 class FieldBrowse extends Component {
@@ -58,6 +58,6 @@ class FieldBrowse extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.reducer_product;
 
 export default connect(mapStateToProps, { updateSearch })(FieldBrowse);

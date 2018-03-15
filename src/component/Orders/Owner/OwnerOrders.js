@@ -1,7 +1,7 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getWarehouseOrders } from '../../../ducks/reducer';
+import { getWarehouseOrders } from '../../../ducks/reducer_order';
 import { Link, Loading } from '../../../imports';
 
 class WarehouseOrders extends Component {
@@ -58,6 +58,6 @@ class WarehouseOrders extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.reducer_order;
 
 export default connect(mapStateToProps, { getWarehouseOrders })(WarehouseOrders);

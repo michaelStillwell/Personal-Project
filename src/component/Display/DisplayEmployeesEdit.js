@@ -7,7 +7,7 @@ import {
             updateTypeEdit, 
             deleteEmployees,
             editEmployees
-        } from '../../ducks/reducer';
+        } from '../../ducks/reducer_employee';
 import { Link, Loading } from '../../imports';
 
 class DisplayEmployeeEdit extends Component {
@@ -27,7 +27,7 @@ class DisplayEmployeeEdit extends Component {
                         {this.props.employees.length ? (
                             <div>
                                 <h1>Employee</h1>
-                                <h2>{employee[0].username}</h2>
+                                <h2>Previous Username: {employee[0].username}</h2>
                                 <input type="text" placeholder='Update Username' 
                                     onChange={e => this.props.updateUsernameEdit(e.target.value)}
                                     defaultValue={employee[0].username}
@@ -36,13 +36,16 @@ class DisplayEmployeeEdit extends Component {
                                     onChange={e => this.props.updatePasswordEdit(e.target.value)}
                                     defaultValue={employee[0].password}
                                 />
-                                <h3>{employee[0].emp_type}</h3>
+                                <h3>Previous Type: {employee[0].emp_type}</h3>
                                 <input type="text" placeholder='Update Type' 
                                     onChange={e => this.props.updateTypeEdit(e.target.value)}
                                     defaultValue={employee[0].emp_type}
                                 />
                                 <Link to='/employees'
-                                        onClick={() => this.props.editEmployees(this.props.match.params.id, send)}
+                                        onClick={() => {
+                                            window.location.reload();
+                                            this.props.editEmployees(this.props.match.params.id, send);
+                                        }}
                                         >Update
                                 </Link>
                                 <Link to='/employees'
@@ -93,7 +96,7 @@ class DisplayEmployeeEdit extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.reducer_employee;
 
 export default connect(mapStateToProps, { 
                                             updateUsernameEdit, 

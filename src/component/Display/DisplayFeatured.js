@@ -1,7 +1,7 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getFeaturedProducts } from '../../ducks/reducer';
+import { getFeaturedProducts } from '../../ducks/reducer_featured';
 import { Loading, Link } from '../../imports';
 
 class DisplayFeatured extends Component {
@@ -41,6 +41,6 @@ class DisplayFeatured extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.reducer_featured;
 
 export default connect(mapStateToProps, {getFeaturedProducts})(DisplayFeatured);

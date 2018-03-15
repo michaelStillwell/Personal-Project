@@ -1,7 +1,7 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getFeaturedProducts } from '../../../ducks/reducer';
+import { getFeaturedProducts } from '../../../ducks/reducer_featured';
 import { Loading, Link } from '../../../imports';
 
 class FieldHome extends Component {
@@ -14,11 +14,11 @@ class FieldHome extends Component {
         return (
             <div className='home-container'>
                 {win ? (
-                    !this.props.featuredLoading ? (
+                    !this.props.featured.featuredLoading ? (
                         <div>
-                            <h1>Field Home Page for {this.props.user}</h1>
+                            <h1>Field Home Page for {this.props.login.user}</h1>
                             <h2>Featured Products:</h2>
-                            {this.props.featuredProducts.map((x,y) => {
+                            {this.props.featured.featuredProducts.map((x,y) => {
                                 return (
                                     <div key={y} className='featured-items'>
                                         <Link to={`/product/display/${x.id}`}>
@@ -31,11 +31,11 @@ class FieldHome extends Component {
                             })}
                         </div>
                     ) : <Loading /> ) : (
-                        !this.props.featuredLoading ? (
+                        !this.props.featured.featuredLoading ? (
                             <div className='home-mobile'>
                                 <h1>Welcome {this.props.user}</h1>
                                 <h2>Featured Products:</h2>
-                                {this.props.featuredProducts.map((x,y) => {
+                                {this.props.featured.featuredProducts.map((x,y) => {
                                     return (
                                         <div key={y} className='featured-items-mobile'>
                                             <Link to={`product/display/${x.id}`}>
@@ -53,6 +53,11 @@ class FieldHome extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => {
+    return {
+        login: state.reducer_login, 
+        featured: state.reducer_featured
+    }
+}
 
 export default connect(mapStateToProps, { getFeaturedProducts })(FieldHome);

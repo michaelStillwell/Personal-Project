@@ -31,6 +31,7 @@ module.exports = {
             db = req.app.get('db'),
             send = [req.body.name, req.body.description, req.body.price, req.body.stock];
 
+        console.log(send);
         db.createProduct(send)
             .then(() => res.status(200))
             .catch(err => console.log('CREATE PRODUCT: ', err));

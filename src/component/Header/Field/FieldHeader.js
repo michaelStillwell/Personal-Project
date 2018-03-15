@@ -1,7 +1,7 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { logoutUser } from '../../../ducks/reducer';
+import { logoutUser } from '../../../ducks/reducer_login';
 import { Link } from '../../../imports';
 
 class FieldHeader extends Component {

@@ -1,6 +1,6 @@
 // React Imports
 import React, { Component } from 'react';
-import { updateUsername, updatePassword, authUser } from '../../ducks/reducer';
+import { updateUsername, updatePassword, authUser } from '../../ducks/reducer_login';
 import { connect } from 'react-redux';
 
 class Login extends Component {

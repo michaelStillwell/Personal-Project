@@ -24,6 +24,6 @@ class Home extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.reducer_login;
 
 export default connect(mapStateToProps)(Home);

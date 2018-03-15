@@ -1,7 +1,7 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getEmployees, createEmployees } from '../../ducks/reducer';
+import { getEmployees, createEmployees } from '../../ducks/reducer_employee';
 import { Loading, Link } from '../../imports';
 
 class DisplayEmlpoyees extends Component {
@@ -53,6 +53,6 @@ class DisplayEmlpoyees extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.reducer_employee;
 
 export default connect(mapStateToProps, { getEmployees, createEmployees })(DisplayEmlpoyees);

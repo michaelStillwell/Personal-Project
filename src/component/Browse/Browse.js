@@ -1,7 +1,7 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getProducts } from '../../ducks/reducer';
+import { getProducts } from '../../ducks/reducer_product';
 import FieldBrowse from './Field/FieldBrowse';
 import WarehouseBrowse from './Warehouse/WarehouseBrowse';
 import OwnerBrowse from './Owner/OwnerBrowse';
@@ -28,6 +28,6 @@ class Browse extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.reducer_login;
 
 export default connect(mapStateToProps, { getProducts })(Browse);

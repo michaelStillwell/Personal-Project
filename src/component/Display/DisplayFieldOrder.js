@@ -1,7 +1,7 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getProductsByOrder } from '../../ducks/reducer';
+import { getProductsByOrder } from '../../ducks/reducer_order';
 import { Link } from '../../imports';
 
 class DisplayOrder extends Component {

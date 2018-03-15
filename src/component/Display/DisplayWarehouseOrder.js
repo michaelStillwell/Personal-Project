@@ -1,7 +1,7 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getProductsByOrder, markAsComplete } from '../../ducks/reducer';
+import { getProductsByOrder, markAsComplete } from '../../ducks/reducer_order';
 import { Link, Loading } from '../../imports';
 
 class DisplayWarehouseOrder extends  Component {
@@ -55,6 +55,6 @@ class DisplayWarehouseOrder extends  Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.reducer_order;
 
 export default connect(mapStateToProps, { getProductsByOrder, markAsComplete })(DisplayWarehouseOrder);

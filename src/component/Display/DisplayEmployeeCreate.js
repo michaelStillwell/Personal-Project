@@ -1,12 +1,13 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateUsernameCreate, updatePasswordCreate, updateTypeCreate, createEmployees } from '../../ducks/reducer';
+import { updateUsernameCreate, updatePasswordCreate, updateTypeCreate, createEmployees } from '../../ducks/reducer_employee';
 import { Link } from '../../imports';
 
 class DisplayEmployeeCreate extends Component {
     render() {
         let send = {username: this.props.employeesCreateUsername, password: this.props.employeesCreatePassword, emp_type: this.props.employeesCreateType};
+        console.log(this.props);
         return (
             <div className='employee-create'>
                 <h1>Create Page</h1>
@@ -27,8 +28,8 @@ class DisplayEmployeeCreate extends Component {
                 />
                 <Link to='/employees'>
                     <button onClick={() => {
-                        this.props.createEmployees(send);
                         window.location.reload();
+                        this.props.createEmployees(send);
                     }}>Create Employee</button>
                 </Link>
             </div>
@@ -36,6 +37,6 @@ class DisplayEmployeeCreate extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.reducer_employee;
 
 export default connect(mapStateToProps, { updateUsernameCreate, updatePasswordCreate, updateTypeCreate, createEmployees })(DisplayEmployeeCreate);

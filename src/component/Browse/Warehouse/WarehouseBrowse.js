@@ -1,7 +1,7 @@
 // React Imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createProduct, updateSearch } from '../../../ducks/reducer';
+import { createProduct, updateSearch } from '../../../ducks/reducer_product';
 import { Loading, Link } from '../../../imports';
 
 class WarehouseBrowse extends Component {
@@ -63,6 +63,6 @@ class WarehouseBrowse extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.reducer_product;
 
 export default connect(mapStateToProps, { createProduct, updateSearch })(WarehouseBrowse);

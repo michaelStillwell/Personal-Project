@@ -36,7 +36,6 @@ module.exports = {
         db.postToNewOrder([req.params.user, req.params.product])
             .then(() => res.status(200))
             .catch(err => console.log('POST TO NEW ORDER', err));
-        console.log('POST TO NEW ORDER');
     },
 
     removeFromNewOrder: (req, res, next) => {
