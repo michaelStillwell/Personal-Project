@@ -38,7 +38,7 @@ class FieldBrowse extends Component {
                 !this.props.productsLoading ? (
                     <div className='browse-mobile'>
                         <h1>Browse</h1>
-                        <input type='text' placeholder='Search...'/>
+                        <input type='text' placeholder='Search...' onChange={e => this.props.updateSearch(e.target.value)} />
                         {this.props.products.filter(z => {
                             return z.name.toLowerCase().includes(this.props.searchInput.toLowerCase());
                         }).map((x,y) => {

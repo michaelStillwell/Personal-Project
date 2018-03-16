@@ -20,6 +20,7 @@ class FieldOrders extends Component {
     }
 
     render() {
+        let win = window.innerWidth > 1024;
         let order;
         if ( this.props.order.orders.length ) {
             order = this.props.order.orders.sort()[this.props.order.orders.length-1].order_id + 1;
@@ -27,60 +28,116 @@ class FieldOrders extends Component {
             order = 1;
         }
         return (
-            <div>
-                {!this.props.order.newProductsLoading && !this.props.order.ordersLoading ? (
-                    <div className='order-container'>
-                        <h1>Field Orders Page</h1>
-                        {this.props.order.currentOrder.map((x,y) => {
-                            let send = {user: this.props.login.user, id: x.id};
-                            return (
-                                <div key={y}>
-                                    <h4>{x.name}</h4>
-                                    <a onClick={() => {
-                                        window.location.reload();
-                                        this.props.removeFromNewOrder(send);
-                                    }}>Remove {x.id}</a>
-                                </div>
-                            )
-                        })}
-                        {              
-                            this.props.order.currentOrder.length ? (
-                                <div>
-                                    <button onClick={() => {
-                                        window.location.reload();
-                                        this.props.removeAllFromNewOrder(this.props.login.user);
-                                    }}>Remove All</button>
-                                    <button onClick={() => {
-                                        window.location.reload();
-                                        this.sendPlaceOrder(order);
-                                    }}>Place Order</button>
-                                </div>
-                            ) : <button>Create New Order</button>
-                        }
-                        {
-                            this.props.order.orders.length ? (
-                                <div>
-                                    <h2>Pending Orders:</h2>
-                                    {this.props.order.orders.map((x, y) => {
-                                        return (
-                                            <div key={y}>
-                                                <Link to={`/order/${x.username}/${x.order_id}`}>
-                                                    Order {x.order_id}
-                                                </Link>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            ) : (
-                                <div>
-                                    <h2>No Orders Pending</h2>
-                                </div>
-                            )
-                        }
-
-                    </div>)
-                : <Loading />}
-            </div>
+            win ? (
+                <div>
+                    {!this.props.order.newProductsLoading && !this.props.order.ordersLoading ? (
+                        <div className='order-container'>
+                            <h1>Field Orders Page</h1>
+                            {this.props.order.currentOrder.map((x,y) => {
+                                let send = {user: this.props.login.user, id: x.id};
+                                console.log(x)
+                                return (
+                                    <div key={y}>
+                                        <h4>{x.name}</h4>
+                                        <a onClick={() => {
+                                            window.location.reload();
+                                            this.props.removeFromNewOrder(send);
+                                        }}>Remove: {x.name}</a>
+                                    </div>
+                                )
+                            })}
+                            {              
+                                this.props.order.currentOrder.length ? (
+                                    <div>
+                                        <button onClick={() => {
+                                            window.location.reload();
+                                            this.props.removeAllFromNewOrder(this.props.login.user);
+                                        }}>Remove All</button>
+                                        <button onClick={() => {
+                                            window.location.reload();
+                                            this.sendPlaceOrder(order);
+                                        }}>Place Order</button>
+                                    </div>
+                                ) : <button>Create New Order</button>
+                            }
+                            {
+                                this.props.order.orders.length ? (
+                                    <div>
+                                        <h2>Pending Orders:</h2>
+                                        {this.props.order.orders.map((x, y) => {
+                                            return (
+                                                <div key={y}>
+                                                    <Link to={`/order/${x.username}/${x.order_id}`}>
+                                                        Order {x.order_id}
+                                                    </Link>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <h2>No Orders Pending</h2>
+                                    </div>
+                                )
+                            }
+                        </div>)
+                    : <Loading />}
+                </div>
+            ) : (
+                <div>
+                    {!this.props.order.newProductsLoading && !this.props.order.ordersLoading ? (
+                        <div className='order-mobile'>
+                            <h1>Field Orders Page</h1>
+                            {this.props.order.currentOrder.map((x,y) => {
+                                let send = {user: this.props.login.user, id: x.id};
+                                return (
+                                    <div key={y} className='link-mobile'>
+                                        <h4>{x.name}</h4>
+                                        <a onClick={() => {
+                                            window.location.reload();
+                                            this.props.removeFromNewOrder(send);
+                                        }}>X</a>
+                                    </div>
+                                )
+                            })}
+                            {              
+                                this.props.order.currentOrder.length ? (
+                                    <div>
+                                        <button onClick={() => {
+                                            window.location.reload();
+                                            this.props.removeAllFromNewOrder(this.props.login.user);
+                                        }}>Remove All</button>
+                                        <button onClick={() => {
+                                            window.location.reload();
+                                            this.sendPlaceOrder(order);
+                                        }}>Place Order</button>
+                                    </div>
+                                ) : <button>Create New Order</button>
+                            }
+                            {
+                                this.props.order.orders.length ? (
+                                    <div>
+                                        <h2>Pending Orders:</h2>
+                                        {this.props.order.orders.map((x, y) => {
+                                            return (
+                                                <div key={y}>
+                                                    <Link to={`/order/${x.username}/${x.order_id}`}>
+                                                        Order {x.order_id}
+                                                    </Link>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <h2>No Orders Pending</h2>
+                                    </div>
+                                )
+                            }
+                        </div>)
+                    : <Loading />}
+                </div>
+            )
         )
     }
 }

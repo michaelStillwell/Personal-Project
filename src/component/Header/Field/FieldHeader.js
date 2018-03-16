@@ -44,7 +44,6 @@ class FieldHeader extends Component {
                                     <Link to="/" onClick={() => document.getElementById('input').checked = false}><li>Home</li></Link>
                                     <Link to="/browse" onClick={() => document.getElementById('input').checked = false}><li>Browse</li></Link>
                                     <Link to="/orders" onClick={() => document.getElementById('input').checked = false}><li>Orders</li></Link>
-                                    <Link to="/featured" onClick={() => document.getElementById('input').checked = false}><li>Featured</li></Link>
                                     <Link to="/" onClick={() => {
                                             document.getElementById('input').checked = false;
                                             this.props.logoutUser()

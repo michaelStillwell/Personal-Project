@@ -10,7 +10,9 @@ class WarehouseHome extends Component {
                 {win ? (
                     <h1>Welcome back {this.props.user}!</h1>
                 ) : (
-                    <h1>Welcome {this.props.user}</h1>
+                    <div className='home-mobile'>
+                        <h1>Welcome {this.props.user}</h1>
+                    </div>
                 )}
             </div>
         )

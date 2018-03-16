@@ -248,7 +248,6 @@ body {
         align-items: flex-end;
         justify-content: flex-end;
         width: 25%;
-        text-align: right;
         // border: solid 1px white;
         margin: 0;
         padding: 0 10px;
@@ -298,6 +297,7 @@ body {
     }
 
     input {
+        border: none;
         height: 10%;
         font-size: 32px;
         margin-bottom: 0;
@@ -317,7 +317,6 @@ body {
         border-bottom: solid 2px white;
         border-left: solid 2px white;
         border-right: solid 2px white;        
-        margin: 0 10px;
     }
 
     @media screen and (min-width: 768px) {
@@ -329,7 +328,6 @@ body {
 
 .hamburger-container {
     width: 100%;
-    background: red;
 
     h1 {
         position: absolute;
@@ -399,7 +397,7 @@ body {
             & ~ span  {
                 opacity: 1;
                 transform: rotate(45deg) translate(-2px, -1px);
-                // background: black;
+                background: black;
             }
 
             & ~ span:nth-last-child(3) {
@@ -422,7 +420,7 @@ body {
         margin: -100px 0 0 -50px;
         padding: 25px;
         padding-top: 125px;
-        background: $background;
+        background: #e1e1e1;
         list-style-type: none;
         -webkit-font-smoothing: antialiased;
         transform-origin: 0% 0%;
@@ -488,7 +486,7 @@ body {
     .title {
         color: white;
         font-size: 52px;
-        margin: 0 10px;
+        // margin: 0 10px;
         border-bottom: solid 2px white;
     }
 
@@ -505,6 +503,22 @@ body {
 
     .stock {
         text-align: right;
+    }
+
+    .mobile-button {
+        display: flex;
+        justify-content: center;
+        text-decoration: none;
+        margin-top: 10px;
+        border-top: solid 2px white;
+
+        button {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: white;
+            font-family: $font;
+        }
     }
 }
 
@@ -536,7 +550,7 @@ body {
         border-bottom: $input-border;
 
         &:focus {
-            outline: none;
+            outline: red;
         }
 
         &::-webkit-inner-spin-button,
@@ -567,7 +581,6 @@ body {
 .display-product-warehouse-mobile {
     display: flex;
     justify-content: center;
-    padding: 10px;
 
     .title {
         margin: 10px 0;
@@ -606,6 +619,10 @@ body {
         padding-left: 10px;
         border: none;
         border-bottom: $input-border;
+
+        &:focus {
+            outline: none;
+        }
     }
 
     .mobile-button {
@@ -731,20 +748,42 @@ body {
 
 .order-mobile {
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    border: solid 2px #404040;
 
     h1 {
         margin: 10px 0 20px 0;
         border-bottom: solid 2px white;
+        text-align: center;
+    }
+
+    .link-mobile {
+        display: flex;
+        align-items: center;
+        
     }
 
     a {
-        margin: 0 38px;
+        text-align: center;
+        margin-left: 10px;
+        text-decoration: underline white;
+    }
+
+    button {
+        background: none;
+        border: none;
+        color: white;
+        font-family: $font;
+        border-top: solid 2px white;
+        margin-top: 20px;
     }
 }
 
 .display-order-container {
     h2 {
         font-size: 52px;
+        color: white;
     }
 
     .product-link {
@@ -786,9 +825,31 @@ body {
 }
 
 .display-order-mobile {
+    display: flex;
+    flex-direction: column;
+
     h1 {
+        margin: 0;
         font-size: 48px;
-        color: red;
+        color: white;
+        border-bottom: solid 2px white;
+        text-align: center;
+    }
+    
+    h2 {
+        margin: 0;
+        text-align: center;
+    }
+
+    .link-mobile {
+        display: flex;
+        justify-content: center;
+    }
+
+    a {
+        text-align: center;
+        text-decoration: underline white;
+        font-size: 24px;
     }
 }
 
@@ -903,6 +964,17 @@ body {
     }
 }
 
+.featured-mobile {
+    h1 {
+        text-align: center;
+    }
+
+    a {
+        margin-left: 20px;
+        margin-right: 0;
+    }
+}
+
 .login-container {
     display: flex;
     flex-direction: column;
@@ -940,6 +1012,40 @@ body {
         &:hover {
             background: white;
             color: black;
+        }
+    }
+}
+
+.login-mobile {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin: 25% 0;
+
+    input {
+        background: none;
+        color: white;
+        border: solid 2px white;
+        border-top: none;
+        font-size: 32px;
+        margin: 20px 10px 5px;
+        padding-top: 10px;
+        text-align: center;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    a {
+        color: white;
+        text-decoration: none;
+        font-size: 32px;
+        text-align: center;
+        margin: 10px;
+        
+        &:focus {
+            outline: none;
         }
     }
 }

@@ -66,9 +66,10 @@ class DisplayProduct extends Component {
                                     <button 
                                         onClick={() => {
                                             this.props.toggleCurrentProductEdit(this.props.product.currentProductEdit);
+                                            console.log(this.props.product.currentProduct)
                                             this.props.inputCurrentInfo(
-                                                this.props.product.currentProduct.name, 
-                                                this.props.product.currentProduct.description, 
+                                                this.props.product.currentProduct.name,
+                                                this.props.product.currentProduct.description,
                                                 this.props.product.currentProduct.price,
                                                 this.props.product.currentProduct.stock);
                                         }}
@@ -114,16 +115,16 @@ class DisplayProduct extends Component {
                                         defaultValue={this.props.product.currentProduct.price}
                                     />
                                     <input 
-                                        type="number" 
-                                        placeholder='Stock' 
+                                        type="number"
+                                        placeholder='Stock'
                                         onChange={e => this.props.editCurrentProduct('STOCK', e.target.value)}
                                         defaultValue={this.props.product.currentProduct.stock}
                                     />
+                                    {console.log('INSIDE:', this.props.product.currentProduct)}
                                     <button
                                         onClick={() => {
                                             this.props.toggleCurrentProductEdit(this.props.product.currentProductEdit);
                                             this.props.updateCurrentProduct(this.props.match.params.id, send);
-                                            window.location.reload();
                                         }}
                                         >Update Product
                                     </button>
@@ -146,7 +147,7 @@ class DisplayProduct extends Component {
                                     <h2 className='title'>{this.props.product.currentProduct.name}</h2>
                                     <p>{this.props.product.currentProduct.description}</p>
                                     <p className='price'>${this.props.product.currentProduct.price}</p>
-                                    <p className='stock'>{this.props.product.currentProduct.stock}</p>
+                                    <p className='stock'>Instock: {this.props.product.currentProduct.stock}</p>
                                     <button
                                         className='mobile-button'
                                         onClick={() => {
@@ -155,9 +156,28 @@ class DisplayProduct extends Component {
                                                 this.props.product.currentProduct.name, 
                                                 this.props.product.currentProduct.description, 
                                                 this.props.product.currentProduct.price,
-                                                this.props.product.currentProduct.stockf);
+                                                this.props.product.currentProduct.stock);
                                         }}
                                     >Edit</button>
+                                    {this.props.featured.featuredProducts.filter(x => x.id === this.props.product.currentProduct.id).length ? (
+                                        <button
+                                            className='mobile-button'
+                                            onClick={() => {
+                                                this.props.deleteFeaturedProduct(this.props.product.currentProduct.id);
+                                                window.location.reload();
+                                            }}
+                                            >Remove from Feat.
+                                        </button>
+                                    ) : (
+                                        <button
+                                            className='mobile-button'
+                                            onClick={() => {
+                                                this.props.postFeaturedProduct(this.props.product.currentProduct.id);
+                                                window.location.reload();
+                                            }}
+                                            >Add to Feat.
+                                        </button>
+                                    )}
                                 </div>
                             ) : (
                                 <div>
@@ -190,6 +210,7 @@ class DisplayProduct extends Component {
                                         defaultValue={this.props.product.currentProduct.stock}
                                     />
                                     <button
+                                        className='mobile-button'
                                         onClick={() => {
                                             this.props.toggleCurrentProductEdit(this.props.product.currentProductEdit);
                                             this.props.updateCurrentProduct(this.props.match.params.id, send);
@@ -199,6 +220,7 @@ class DisplayProduct extends Component {
                                     </button>
                                     <Link to='/browse'>
                                         <button
+                                            className='mobile-button'
                                             onClick={() => {
                                                 this.props.deleteCurrentProduct(this.props.match.params.id);
                                             }}
@@ -213,20 +235,38 @@ class DisplayProduct extends Component {
 
             case 'Field':
                 return (
-                    <div className='display-product-owner'>
-                        <div className='content'>
-                            <h2 className='title'>{this.props.product.currentProduct.name}</h2>
-                            <p>{this.props.product.currentProduct.description}</p>
-                            <p className='price'>${this.props.product.currentProduct.price}</p>
-                            <p>Left Instock: {this.props.product.currentProduct.stock}</p> 
+                    win ? (
+                        <div className='display-product-owner'>
+                            <div className='content'>
+                                <h2 className='title'>{this.props.product.currentProduct.name}</h2>
+                                <p>{this.props.product.currentProduct.description}</p>
+                                <p className='price'>${this.props.product.currentProduct.price}</p>
+                                <p>Left Instock: {this.props.product.currentProduct.stock}</p> 
+                            </div>
+                            <Link to='/browse'>
+                                <button 
+                                    onClick={() => this.props.postNewOrder(this.props.login.user, this.props.product.currentProduct.id)}
+                                    >Add to Order
+                                </button>
+                            </Link>
                         </div>
-                        <Link to='/browse'>
-                            <button 
-                                onClick={() => this.props.postNewOrder(this.props.login.user, this.props.product.currentProduct.id)}
-                                >Add to Order
-                            </button>
-                        </Link>
-                    </div>
+                    ) : (
+                        <div className='display-product-owner-mobile'>
+                            <div className='content'>
+                                <h2 className='title'>{this.props.product.currentProduct.name}</h2>
+                                <p>{this.props.product.currentProduct.description}</p>
+                                <p className='price'>${this.props.product.currentProduct.price}</p>
+                                <p>Instock: {this.props.product.currentProduct.stock}</p>
+                            </div>
+                            <Link to='/browse'
+                                className='mobile-button'>
+                                <button
+                                    onClick={() => this.props.postNewOrder(this.props.login.user, this.props.product.currentProduct.id)}
+                                    >Add
+                                </button>
+                            </Link>
+                        </div>
+                    )
                 )
 
             default:

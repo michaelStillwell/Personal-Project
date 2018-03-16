@@ -34,8 +34,8 @@ class DisplayProductCreate extends Component {
                 />
                 <Link to='/browse'>
                     <button onClick={() => {
-                        window.location.reload();
                         this.props.createProduct(send);
+                        window.location.reload();
                     }}>Submit New Product</button>
                 </Link>
             </div>

@@ -3,7 +3,7 @@ module.exports = {
         const
             db = req.app.get('db');
     
-        db.login(req.body.username)
+        db.login([req.body.username])
             .then(response => {
                 if (response) {
                     req.session.user = response[0];

@@ -100,6 +100,7 @@ export function editCurrentProduct(input, val) {
 }
 
 export function updateCurrentProduct(id, send) {
+    console.log(send);
     return {
         type: EDIT_PRODUCT_UPDATE,
         payload: 
@@ -181,6 +182,7 @@ export default function reducer_product(state = productState, action) {
             return Object.assign({}, state, { currentProductEdit: action.payload });
         
         case INPUT_CURRENT_EDIT:
+            console.log(action.payload)
             return Object.assign({}, state, { 
                                                 currentProductEditName: action.payload.name,
                                                 currentProductEditDescription: action.payload.desc,

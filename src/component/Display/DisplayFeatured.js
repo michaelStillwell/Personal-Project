@@ -11,7 +11,6 @@ class DisplayFeatured extends Component {
     
     render() {
         let win = window.innerWidth > 1024;
-        console.log(this.props.featuredProducts)
         return (
             <div className='featured-container'>
                 {win ? (
@@ -33,7 +32,20 @@ class DisplayFeatured extends Component {
                     </div>
                 ) : (
                     <div>
-                        <h1>Featured</h1>
+                        {!this.props.featuredLoading ? (
+                            <div className='featured-mobile'>
+                                <h1>Featured</h1>
+                                {this.props.featuredProducts.map((x,y) => {
+                                    return (
+                                        <div key={y}>
+                                            <Link to={`/product/display/${x.id}`}>
+                                                {x.name}
+                                            </Link>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        ) : <Loading />}
                     </div>
                 )}
             </div>

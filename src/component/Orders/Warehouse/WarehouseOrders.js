@@ -35,14 +35,14 @@ class WarehouseOrders extends Component {
                         </div>
                     ) : <Loading />
                 ) : (
-                    this.props.ordersLoading ? (
+                    !this.props.ordersLoading ? (
                         <div className='order-mobile'>
                             {this.props.orders.length ? (
                                 <div>
                                     <h1>Orders</h1>
                                     {this.props.orders.map((x,y) => {
                                         return (
-                                            <div key={y}>
+                                            <div key={y} className='link-mobile'>
                                                 <Link to={`/order/warehouse/${x.username}/${x.order_id}`}>
                                                     {`${x.username} ${x.order_id}`}
                                                 </Link>
@@ -50,9 +50,9 @@ class WarehouseOrders extends Component {
                                         )
                                     })}
                                 </div>
-                            ) : <Loading />}
+                            ) :<h1>No Pending Orders</h1>}
                         </div>
-                    ) : <h1>No Pending Orders</h1>
+                    ) : <Loading />
                 )}
             </div>
         )

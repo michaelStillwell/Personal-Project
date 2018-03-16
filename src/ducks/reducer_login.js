@@ -24,7 +24,7 @@ export function checkSession() {
     axios
         .get('/api/session')
         .then(response => {
-            console.log('CHECK SESSION: ', response.data.user);
+            // console.log('CHECK SESSION: ', response.data.user);
             localStorage.user = response.data.user.username;
             localStorage.emp_type = response.data.user.emp_type;
         })
@@ -39,10 +39,8 @@ export function authUser(send) {
                 .post('/api/auth', send)
                 .then(response => {
                     if ( response.data.Body.length ) {
-                        window.location.reload();
                         return response.data.Body[0];
                     } else {
-                        window.location.reload();
                         alert('User Not Found');
                     }
                 })
@@ -51,14 +49,11 @@ export function authUser(send) {
 }
 
 export function updateUsername(val) {
-    console.log(val);
     return {
         type: UPDATE_USERNAME,
         payload: val
     }
 }
-
-
 
 export function updatePassword(val) {
     return {
