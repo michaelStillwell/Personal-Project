@@ -96,6 +96,7 @@ class DisplayProduct extends Component {
                             ) : (
                                 <div className='display-product-warehouse'>
                                     <h2>Edit!</h2>
+                                    <button onClick={() => this.props.toggleCurrentProductEdit(this.props.product.currentProductEdit)}>Undo Changes</button>
                                     <input 
                                         type="text" 
                                         placeholder='Title' 
@@ -182,6 +183,11 @@ class DisplayProduct extends Component {
                             ) : (
                                 <div>
                                     <h2>Edit!</h2>
+                                    <button
+                                        className='mobile-button'
+                                        onClick={() => this.props.toggleCurrentProductEdit(this.props.product.currentProductEdit)}
+                                        >Undo Changes
+                                    </button>
                                     <input 
                                         type="text" 
                                         autoFocus
