@@ -1,10 +1,15 @@
 // React Imports
 import React, { Component } from 'react';
 
+import background from '../../Assets/fqeseGQ.gif';
+
 class NoPage extends Component {
     render() {
         return (
-            <h1>Page Not Found</h1>
+            <div className='nopage'>
+                <h1>404 Page Not Found</h1>
+                <img src={background} alt='Page Not Found' />
+            </div>
         )
     }
 }

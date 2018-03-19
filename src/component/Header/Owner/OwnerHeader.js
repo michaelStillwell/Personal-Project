@@ -25,6 +25,9 @@ class FieldHeader extends Component {
                                 <Link to='/orders'>
                                     Orders
                                 </Link>
+                                <Link to='/featured'>
+                                    Featured
+                                </Link>
                                 <Link to='/employees'>
                                     Employees
                                 </Link>
@@ -38,7 +41,7 @@ class FieldHeader extends Component {
                             <h1>Owner</h1>
                             <nav>
                                 <div id='menuToggle'>
-                                    <input id='input' type='checkbox'/>
+                                    <input id='input' type='checkbox' onBlur={() => document.getElementById('input').checked = false} />
                                     <span></span>
                                     <span></span>
                                     <span></span>
@@ -48,6 +51,7 @@ class FieldHeader extends Component {
                                     <Link to="/browse" onClick={() => document.getElementById('input').checked = false}><li>Browse</li></Link>
                                     <Link to="/orders" onClick={() => document.getElementById('input').checked = false}><li>Orders</li></Link>
                                     <Link to="/featured" onClick={() => document.getElementById('input').checked = false}><li>Featured</li></Link>
+                                    <Link to="/employees" onClick={() => document.getElementById('input').checked = false}><li>Employees</li></Link>
                                     <Link to="/" onClick={() => {
                                             document.getElementById('input').checked = false;
                                             this.props.logoutUser()

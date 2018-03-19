@@ -29,7 +29,7 @@ class WarehouseHeader extends Component {
                         </div>
                         <nav>
                             <div id='menuToggle'>
-                                <input id='input' type='checkbox'/>
+                                <input id='input' type='checkbox' onBlur={() => document.getElementById('input').checked = false} />
                                 <span></span>
                                 <span></span>
                                 <span></span>

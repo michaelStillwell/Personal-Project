@@ -700,6 +700,15 @@ body {
         font-size: 48px;
     }
 
+    h4 {
+        font-size: 32px;
+        margin: 0;
+    }
+
+    .product {
+        margin-bottom: 10px;
+    }
+
     #complete {
         border: none;
         color: blue;
@@ -714,6 +723,12 @@ body {
         font-family: $font;
         border-top: solid 2px white;
         cursor: pointer;
+        transition: 200ms ease;
+
+        &:hover {
+            background: white;
+            color: black;
+        }
     }
 
     .order-link {
@@ -731,18 +746,19 @@ body {
     }
 
     a {
-        font-size: 48px;
         width: 100%;
         text-decoration: none;
         color: white;
-        padding: 0 10px;
+        // padding: 0 10px;
+        margin-left: 10px;
+        cursor: pointer;
         transition: 200ms ease;
 
-        // &:hover {
-        //     background: white;
-        //     color: black;
-        //     margin-left: 10px;
-        // }
+        &:hover {
+            background: white;
+            color: black;
+            margin-left: 20px;
+        }
     }
 }
 
@@ -938,6 +954,36 @@ body {
     }
 }
 
+.employee-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+
+    .input {
+        font-size: 32px;
+        width: 100%;
+        margin: 0;
+        margin-top: 10px;
+        text-align: center;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    a {
+        margin-top: 10px;
+        text-align: center;
+        padding: 0;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
 .featured-container {
     h1 {
         font-size: 48px;
@@ -1107,6 +1153,17 @@ body {
             font-style: italic;
         }
     }
+}
 
+.nopage {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0;
+    // border: solid 5px red;
 
+    h1 {
+        // margin: 0;
+    }
 }

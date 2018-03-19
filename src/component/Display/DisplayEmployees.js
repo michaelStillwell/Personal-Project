@@ -31,8 +31,8 @@ class DisplayEmlpoyees extends Component {
                         </div>
                     ) : <Loading />
                 ) : (
-                    !this.props.employeesLoading && this.employees.length ? (
-                        <div>
+                    !this.props.employeesLoading && this.props.employees.length ? (
+                        <div className='employee-mobile'>
                             <h1>Employees</h1>
                             {this.props.employees.map((x,y) => (
                                 <div key={y}>

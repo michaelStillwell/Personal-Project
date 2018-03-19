@@ -124,8 +124,8 @@ class DisplayProduct extends Component {
                                     {console.log('INSIDE:', this.props.product.currentProduct)}
                                     <button
                                         onClick={() => {
-                                            this.props.toggleCurrentProductEdit(this.props.product.currentProductEdit);
                                             this.props.updateCurrentProduct(this.props.match.params.id, send);
+                                            window.location.reload();
                                         }}
                                         >Update Product
                                     </button>

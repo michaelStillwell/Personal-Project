@@ -12,11 +12,11 @@ class DisplayOrder extends Component {
 
     render() {
         return (
-            <div>
+            <div className='order-container'>
                 <h1>Display Order</h1>
                 {!this.props.currentOrderLoading ? this.props.currentOrder.map((x,y) => {
                     return (
-                        <div key={y} className='order-container'>
+                        <div key={y}>
                             <Link to={`/product/display/${x.product}`}>
                                 {x.name}
                             </Link>
@@ -28,6 +28,6 @@ class DisplayOrder extends Component {
     }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => state.reducer_order;
 
 export default connect(mapStateToProps, { getProductsByOrder })(DisplayOrder);

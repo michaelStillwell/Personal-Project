@@ -3,7 +3,7 @@ import React from 'react';
 import { 
     Switch, Route, Test,
 
-    LandingPage, Home, Browse, 
+    Header, LandingPage, Home, Browse, 
     Orders, FieldNewOrder, DisplayFieldOrder, 
     DisplayWarehouseOrder, DisplayProduct, DisplayEmployees,
     DisplayEmployeesCreate, DisplayEmployeesEdit, DisplayFeatured,
@@ -13,21 +13,100 @@ import {
 
 export default (
     <Switch>
-        <Route exact path='/' component={LandingPage} />
-        <Route path='/home' component={Home} />
-        <Route path='/browse' component={Browse} />
-        <Route path='/orders/create/:id' component={FieldNewOrder} />
-        <Route path='/orders' component={Orders} />
-        <Route path='/order/warehouse/:username/:id' component={DisplayWarehouseOrder} />
-        <Route path='/order/:username/:id' component={DisplayFieldOrder} />
-        <Route path='/product/display/:id' component={DisplayProduct} />
-        <Route path='/product/create'component={DisplayProductCreate} />
-        <Route path='/employees' component={DisplayEmployees} />
-        <Route path='/employee/create' component={DisplayEmployeesCreate} />
-        <Route path='/employee/edit/:id' component={DisplayEmployeesEdit} />
-        <Route path='/featured' component={DisplayFeatured} />
-        <Route path='/map' component={Map} />
-        <Route path='/test' component={Test} />
-        <Route path='*' component={NoPage} />
+        <Route exact path='/' render={props => (
+            <div>
+                <Header />
+                <LandingPage />
+            </div>
+        )} />
+        <Route path='/home' render={props => (
+            <div>
+                <Header />
+                <Home {...props} />
+            </div>
+        )} />
+        <Route path='/browse' render={props => (
+            <div>
+                <Header />
+                <Browse {...props} />
+            </div>
+        )} />
+        <Route path='/orders/create/:id' render={props => (
+            <div>
+                <Header />
+                <FieldNewOrder {...props} />
+            </div>
+        )} />
+        <Route path='/orders' render={props => (
+            <div>
+                <Header />
+                <Orders {...props} />
+            </div>
+        )} />
+        <Route path='/order/warehouse/:username/:id' render={props => (
+            <div>
+                <Header />
+                <DisplayWarehouseOrder {...props} />
+            </div>
+        )} />
+        <Route path='/order/:username/:id' render={props => (
+            <div>
+                <Header />
+                <DisplayFieldOrder {...props} />
+            </div>
+        )} />
+        <Route path='/product/display/:id' render={props => (
+            <div>
+                <Header />
+                <DisplayProduct {...props} />
+            </div>
+        )} />
+        <Route path='/product/create'render={props => (
+            <div>
+                <Header />
+                <DisplayProductCreate {...props} />
+            </div>
+        )} />
+        <Route path='/employees' render={props => (
+            <div>
+                <Header />
+                <DisplayEmployees {...props} />
+            </div>
+        )} />
+        <Route path='/employee/create' render={props => (
+            <div>
+                <Header />
+                <DisplayEmployeesCreate {...props} />
+            </div>
+        )} />
+        <Route path='/employee/edit/:id' render={props => (
+            <div>
+                <Header />
+                <DisplayEmployeesEdit {...props} />
+            </div>
+        )} />
+        <Route path='/featured' render={props => (
+            <div>
+                <Header />
+                <DisplayFeatured {...props} />
+            </div>
+        )} />
+        <Route path='/map' render={props => (
+            <div>
+                <Header />
+                <Map {...props} />
+            </div>
+        )} />
+        <Route path='/test' render={props => (
+            <div>
+                <Header />
+                <Test {...props} />
+            </div>
+        )} />
+        <Route path='*' render={props => (
+            <div>
+                <NoPage />
+            </div>
+        )} />
     </Switch>
 )

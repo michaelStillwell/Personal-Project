@@ -35,9 +35,8 @@ class FieldOrders extends Component {
                             <h1>Field Orders Page</h1>
                             {this.props.order.currentOrder.map((x,y) => {
                                 let send = {user: this.props.login.user, id: x.id};
-                                console.log(x)
                                 return (
-                                    <div key={y}>
+                                    <div key={y} className='product'>
                                         <h4>{x.name}</h4>
                                         <a onClick={() => {
                                             window.location.reload();

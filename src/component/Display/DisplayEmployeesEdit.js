@@ -43,13 +43,16 @@ class DisplayEmployeeEdit extends Component {
                                 />
                                 <Link to='/employees'
                                         onClick={() => {
-                                            window.location.reload();
                                             this.props.editEmployees(this.props.match.params.id, send);
+                                            window.location.reload();
                                         }}
                                         >Update
                                 </Link>
                                 <Link to='/employees'
-                                        onClick={() => this.props.deleteEmployees(this.props.match.params.id)}
+                                        onClick={() => {
+                                            this.props.deleteEmployees(this.props.match.params.id);
+                                            window.location.reload();
+                                        }}
                                         >Delete
                                 </Link>
                             </div>
@@ -75,17 +78,19 @@ class DisplayEmployeeEdit extends Component {
                                         onChange={e => this.props.updateTypeEdit(e.target.value)}
                                         defaultValue={employee[0].emp_type}
                                     />
-                                    <Link to='/employees'>
-                                        <button 
-                                            onClick={() => this.props.editEmployees(this.props.match.params.id, send)}
+                                    <Link to='/employees'
+                                            onClick={() => {
+                                                this.props.editEmployees(this.props.match.params.id, send);
+                                                window.location.reload();
+                                            }}
                                             >Update
-                                        </button>
                                     </Link>
-                                    <Link to='/employees'>
-                                        <button 
-                                            onClick={() => this.props.deleteEmployees(this.props.match.params.id)}
+                                    <Link to='/employees'
+                                            onClick={() => {
+                                                this.props.deleteEmployees(this.props.match.params.id);
+                                                window.location.reload();
+                                            }}
                                             >Delete
-                                        </button>
                                     </Link>
                                 </div>
                             ) : <Loading />}
