@@ -7,6 +7,8 @@ const
     massive = require('massive'),
     express = require('express'),
     app = express(),
+    cors = require('cors'),
+    { json } = require('body-parser'),
     port = PORT || 3223,
     
     { 
@@ -177,10 +179,12 @@ const root = {
     },
 };
 
-app.use('/', graphqlHTTP({
+app.use('/', cors(), json(), graphqlHTTP({
     schema: schema,
     rootValue: root,
     graphiql: true
 }))
+
+// app.use(cors());
 
 app.listen(port, () => console.log(`Listening to port ${port} radio`));
