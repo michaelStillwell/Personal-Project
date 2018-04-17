@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 
 // CONSTANTS
 const
+
     TEST = 'TEST';
 
 const defualtState = {
@@ -32,6 +33,19 @@ export const getEmployees = () => {
         )
     }
 };
+
+// export const userLogin = () => {
+//     return {
+//         type: LOGIN,
+//         payload: (
+//             client.query({
+//                 query: gql`
+//                     query 
+//                 `
+//             })
+//         )
+//     }
+// }
 
 // REDUCER
 export default function reducer(state = defualtState, action) {

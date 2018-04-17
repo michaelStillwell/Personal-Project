@@ -1,143 +1,165 @@
-const
-    graphql = require('graphql'),
-    connectionString = process.env.CONNECTION_STRING,
+const 
+    { 
+        buildSchema,
+        GraphQLList
+    } = require('graphql'),
+    { CONNECTION_STRING } = process.env,
     pgp = require('pg-promise')(),
-    db = pgp(connectionString);
+    db = pgp(CONNECTION_STRING);
 
-// return db.any(`
-//     SELECT
-//         o.order_id, o.emp_id,
-//         p.name, p.description,
-//         p.price, p.stock,
-//         o.completion
-//     FROM emp_order AS o JOIN product AS p
-//     ON p.id = o.product
-// `)
-
-
-const {
-    GraphQLObjectType,
-    GraphQLID,
-    GraphQLFloat,
-    GraphQLInt,
-    GraphQLString,
-    GraphQLBoolean,
-    GraphQLList,
-    GraphQLSchema,
-    GraphQLNonNull,
-    GraphQLInputObjectType
-} = graphql;
-
-const EmployeeType = new GraphQLObjectType({
-    name: 'Employee',
-    fields: () => ({
-        id: { type: GraphQLID },
-        username: { type: GraphQLString },
-        password: { type: GraphQLString },
-        emp_type: { type: GraphQLString }
-    })
-});
-
-const Emp_TypeType = new GraphQLObjectType({
-    name: 'EmployeeType',
-    fields: () => ({
-        id: { type: GraphQLID },
-        title: { type: GraphQLString }
-    })
-});
-
-const ProductType = new GraphQLObjectType({
-    name: 'Product',
-    fields: () => ({
-        id: { type: GraphQLID },
-        name: { type: GraphQLString },
-        description: { type: GraphQLString },
-        price: { type: GraphQLFloat },
-        stock: { type: GraphQLInt }
-    })
-});
-
-const OrderType = new GraphQLObjectType({
-    name: 'Order',
-    fields: () => ({
-        order_id: { type: GraphQLInt },
-        products: { 
-            type: new GraphQLList(ProductType),
-            resolve(order) {
-                return db.any(`SELECT * FROM product WHERE id = ${order.product}`)
-                    .then(product => product)
-                    .catch(err => console.log('ORDER PRODUCT ERROR: ', err))
-            }
-        }
-    })
-});
-
-const ProductInput = new GraphQLInputObjectType({
-    name: 'ProductInput',
-    fields: () => ({
-        id: { type: new GraphQLNonNull(GraphQLID) },
-        name: { type: GraphQLString },
-        description: { type: GraphQLString },
-        price: { type: GraphQLFloat },
-        stock: { type: GraphQLInt }
-    })
-})
-
-const RootQuery = new GraphQLObjectType({
-    name: 'RootQueryType',
-    fields: {
-        allEmployees: {
-            type: new GraphQLList(EmployeeType),
-            resolve(parentValue, args) {
-                return db.any(`SELECT * FROM employee`)
-                    .then(info => info)
-                    .catch(err => console.log('ALL EMPOYEES ERROR: ', err));
-            }
-        },
-        employee: {
-            type: EmployeeType,
-            args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-            resolve(parentValue, args) {
-                return db.one(`SELECT * FROM employee WHERE id=${args.id}`)
-                    .then(info => info)
-                    .catch(err => console.log('EMPLOYEE ERROR: ', err))
-            }
-        },
-        allEmployeeTypes: {
-            type: new GraphQLList(Emp_TypeType),
-            resolve(parentValue, args) {
-                return db.any(`SELECT * FROM employee_type`)
-                    .then(info => info)
-                    .catch(err => console.log('EMPLOYEE TYPES ERROR: ', err));
-            }
-        },
-        allProducts: {
-            type: ProductType,
-            resolve(parentValue, args) {
-                return db.any(`SELECT * FROM product`)
-                    .then(info => info)
-                    .catch(err => console.log('ALL PRODTUCS ERROR: ', err));
-            }
-        },
-        product: {
-            type: ProductType,
-            args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-            resolve(parentValue, args) {
-                return db.one(`SELECT * FROM product WHERE id=${args.id}`)
-            }
-        },
-        allOrders: {
-            type: new GraphQLList(OrderType),
-            args: { emp_id: { type: GraphQLString }, order_id: { type: GraphQLID } },
-            resolve(parentValue, args) {
-                return db.any(`SELECT * FROM emp_order WHERE order_id = ${args.order_id}`)
-                    .then(info => info)
-                    .catch(err => console.log('ALL ORDERS ERROR: ', err));
-            }
-        },
+const schema = buildSchema(`
+    type Employee {
+        id: ID
+        username: String
+        password: String
+        emp_type: String
     }
-});
 
-module.exports = new GraphQLSchema({
-    query: RootQuery,
-})
+    type Product {
+        id: ID
+        name: String
+        description: String
+        price: Float
+        stock: Int
+    }
+
+    type Order {
+        product: [Product]
+    }
+
+    input ProductInput {
+        name: String
+        description: String
+        price: Float
+        stock: Int
+    }
+
+    input EmployeeInput {
+        username: String
+        password: String
+        emp_type: String
+    }
+
+    type Query {
+        getEmployee(id: ID!): Employee
+        getAllEmployees: [Employee]
+        getProduct(id: ID!): Product
+        getAllProducts: [Product]
+        getOrder(id: ID!): Order
+    }
+
+    type Mutation {
+        createProduct(input: ProductInput): [Product]
+        updateProduct(id: ID!, input: ProductInput): [Product]
+        deleteProduct(id: ID!): [Product]
+        createEmployee(input: EmployeeInput): [Employee]
+        updateEmployee(id: ID!, input: EmployeeInput): [Employee]
+        deleteEmployee(id: ID!): [Employee]
+    }
+`);
+
+class Employee {
+    constructor(id, username, password, emp_type) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.emp_type = emp_type;
+    }
+};
+
+class Product {
+    constructor(id, name, description, price, stock) {
+        this.id = id, 
+        this.name = name, 
+        this.description = description, 
+        this.price = price, 
+        this.stock = stock
+    }
+};
+
+class Order {
+    constructor(product) {
+        this.product = product
+    }
+};
+
+const root = {
+    getEmployee: ({id}) => {
+        return db.any(`SELECT * FROM employee WHERE id = ${id}`)
+            .then(info => info.map(x => new Employee(x.id, x.username, x.password, x.emp_type)))
+            .catch(err => console.log('GET EMPLOYEE ERROR: ', err));
+    },
+    getAllEmployees: () => {
+        return db.any(`SELECT * FROM employee`)
+            .then(info => info.map(x => new Employee(x.id, x.username, x.password, x.emp_type)))
+            .catch(err => console.log('GET ALL EMPLOYEES ERROR: ', err));
+    },
+    createEmployee: (arg) => {
+        return db.any(`
+                INSERT INTO employee (username, password, emp_type) VALUES ('${arg.input.username}', '${arg.input.password}', '${arg.input.emp_type}');
+                SELECT * FROM employee;
+            `)
+            .then(info => info.map(x => new Employee(x.id, x.username, x.password, x.emp_type)))
+            .catch(err => console.log('EMPLOYEE ERROR: ', err))
+    },
+    updateEmployee: (arg) => {
+        return db.any(`
+                UPDATE employee SET username = '${arg.input.username}', password = '${arg.input.password}', emp_type = '${arg.input.emp_type}' WHERE id = ${arg.id};
+                SELECT * FROM employee WHERE id = ${arg.id}
+            `)
+            .then(info => info.map(x => new Employee(x.id, x.username, x.password, x.emp_type)))
+            .catch(err => console.log('EMPLOYEE ERROR: ', err))
+    },
+    deleteEmplooyee: ({id}) => {
+        return db.any(`
+                DELETE FROM employee WHERE id = ${id};
+                SELECT FROM employee;
+            `)
+            .then(info => info.map(x => new Employee(x.id, x.username, x.password, x.emp_type)))
+            .catch(err => console.log('EMPLOYEE ERROR: ', err))
+    },
+    getProduct: ({id}) => {
+        return db.any(`SELECT * FROM product WHERE id = ${id}`)
+            .then(info => info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock)))
+            .catch(err => console.log('GET PRODUCT ERROR: ', err));
+    },
+    getAllProducts: () => {
+        return db.any(`SELECT * FROM product`)
+            .then(info => info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock)))
+            .catch(err => console.log('GET ALL PRODUCTS ERROR: ', err));
+    },
+    createProduct: (arg) => {
+        return db.any(`
+                INSERT INTO product (name, description, price, stock) VALUES ('${arg.input.name}', '${arg.input.description}', ${arg.input.price}, ${arg.input.stock});
+                SELECT * FROM product;
+            `)
+            .then(info => info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock)))
+            .catch(err => console.log('CREATE PRODUCT ERROR: ', err));
+    },
+    updateProduct:(arg) => {
+        return db.any(`
+                UPDATE product SET name = '${arg.input.name}', description = '${arg.input.description}', price = ${arg.input.price}, stock = ${arg.input.stock} WHERE id = ${arg.id};
+                SELECT * FROM product WHERE id = ${arg.id}
+            `)
+            .then(info => info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock)))
+            .catch(err => console.log('UPDATE PRODUCT ERROR: ', err))
+    },
+    deleteProduct:({id}) => {
+        return db.any(`
+                DELETE FROM product WHERE id = ${id};
+                SELECT * FROM product;
+            `)
+            .then(info => {
+                console.log(info);
+                return info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock));
+            })
+            .catch(err => console.log('DELETE PRODUCT ERROR: ', err));
+    },
+    getOrder: ({id}) => {
+        return db.any(`SELECT * FROM emp_order WHERE order_id = ${id}`)
+            .then(info => new Order(info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock))))
+            .catch(err => console.log('GET ORDER: ', err));
+    },
+};
+
+module.exports = {schema, root};
