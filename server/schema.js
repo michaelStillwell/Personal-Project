@@ -36,7 +36,6 @@ const schema = buildSchema(`
 
     input EmployeeInput {
         username: String
-        password: String
         emp_type: String
     }
 
@@ -49,6 +48,7 @@ const schema = buildSchema(`
     }
 
     type Mutation {
+        login(username: String, password: String): [Employee]
         createProduct(input: ProductInput): [Product]
         updateProduct(id: ID!, input: ProductInput): [Product]
         deleteProduct(id: ID!): [Product]
@@ -83,23 +83,10 @@ class Order {
     }
 };
 
-const login = (req, res, next) => {
-    console.log('hi')
-    // if ( req.user ) {
-    //     db.any(`
-    //         SELECT EXISTS ( SELECT * FROM employee WHERE username = ${req.user.username} );
-    //     `)
-    //         .then(info => console.log(info))
-    //         .catch(err => console.log('AUTH ERROR: ', err));
-    // } else {
-    //     console.log('still worked')
-    // }
-}
-
 const root = {
-    authUser: () => {
-        return db.any()
-            .then(info => info)
+    login: (arg) => {
+        return db.any(`SELECT * FROM employee WHERE username = '${arg.username}' AND password = '${arg.password}'`)
+            .then(info => info.map(x => new Employee(x.id, x.username, x.password, x.emp_type)))
             .catch(err => console.log('AUTH USER ERROR: ', err));
     },
     getEmployee: ({id}) => {
@@ -180,4 +167,4 @@ const root = {
     },
 };
 
-module.exports = {schema, root, login};
+module.exports = {schema, root};

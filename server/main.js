@@ -9,7 +9,7 @@ const
     port = PORT || 3223,
     
     graphqlHTTP = require('express-graphql'),
-    {schema, root, login} = require('./schema');
+    {schema, root} = require('./schema');
 
     
 app.use(session({
@@ -21,21 +21,17 @@ app.use(session({
     }
 }));
 
-app.use(function(req, res, next) {
-    if ( !req.session.user ) req.session.user = null;
-    next();
-});
+// app.use(function(req, res, next) {
+//     if ( !req.session.user ) req.session.user = null;
+//     next();
+// });
     
-app.use('/', cors(), json(), (req, res, next) => {
-    return graphqlHTTP({
-        schema: schema,
-        rootValue: root,
-        graphiql: true
-    });
-});
+app.use('/', cors(), json(), graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true
+}));
 
 // app.use(express.static(`${__dirname}/../build`));
-
-app.post('/api/meowth', () => console.log('hi'));
 
 app.listen(port, () => console.log(`Listening to port ${port} radio`));

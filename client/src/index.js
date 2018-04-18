@@ -14,6 +14,15 @@ import { ApolloLink } from 'apollo-client-preset'
 import App from './components/App';
 import store from './store';
 
+Storage.prototype.setObject = function(key, value) {
+    this.setItem(key, JSON.stringify(value));
+};
+
+Storage.prototype.getObject = function(key) {
+    const value = this.getItem(key);
+    return value && JSON.parse(value);
+};
+
 const httpLink = new HttpLink({ uri: 'http://localhost:3223', credentials: 'same-origin' });
 
 const middlewareAuthLink = new ApolloLink((operation, forward) => {
