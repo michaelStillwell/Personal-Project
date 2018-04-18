@@ -1,6 +1,6 @@
 require('dotenv').config();
 const
-    { PORT } = process.env,
+    { PORT, CONNECTION_STRING } = process.env,
     express = require('express'),
     session = require('express-session'),
     app = express(),
@@ -9,7 +9,7 @@ const
     port = PORT || 3223,
     
     graphqlHTTP = require('express-graphql'),
-    {schema, root} = require('./schema');
+    {schema, root, login} = require('./schema');
 
     
 app.use(session({
@@ -33,6 +33,9 @@ app.use('/', cors(), json(), (req, res, next) => {
         graphiql: true
     });
 });
+
 // app.use(express.static(`${__dirname}/../build`));
+
+app.post('/api/meowth', () => console.log('hi'));
 
 app.listen(port, () => console.log(`Listening to port ${port} radio`));

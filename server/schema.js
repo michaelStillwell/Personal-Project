@@ -83,7 +83,25 @@ class Order {
     }
 };
 
+const login = (req, res, next) => {
+    console.log('hi')
+    // if ( req.user ) {
+    //     db.any(`
+    //         SELECT EXISTS ( SELECT * FROM employee WHERE username = ${req.user.username} );
+    //     `)
+    //         .then(info => console.log(info))
+    //         .catch(err => console.log('AUTH ERROR: ', err));
+    // } else {
+    //     console.log('still worked')
+    // }
+}
+
 const root = {
+    authUser: () => {
+        return db.any()
+            .then(info => info)
+            .catch(err => console.log('AUTH USER ERROR: ', err));
+    },
     getEmployee: ({id}) => {
         return db.any(`SELECT * FROM employee WHERE id = ${id}`)
             .then(info => info.map(x => new Employee(x.id, x.username, x.password, x.emp_type)))
@@ -162,4 +180,4 @@ const root = {
     },
 };
 
-module.exports = {schema, root};
+module.exports = {schema, root, login};
