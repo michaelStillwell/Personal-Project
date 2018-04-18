@@ -8,8 +8,8 @@ const
     rename = require('gulp-rename'),
     changed = require('gulp-changed');
 
-let SCSS_SRC  = './src/Assets/scss/**/*.scss';
-let SCSS_DEST = './src/Assets/css';
+let SCSS_SRC  = './client/src/Assets/scss/**/*.scss';
+let SCSS_DEST = './client/src/Assets/css';
 
 gulp.task('compile_scss', function() {
     gulp.src(SCSS_SRC)

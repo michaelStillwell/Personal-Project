@@ -39,7 +39,7 @@ const middlewareAuthLink = new ApolloLink((operation, forward) => {
 const httpLinkWithAuthToken = middlewareAuthLink.concat(httpLink);
 
 const client = new ApolloClient({
-    link: httpLink,
+    link: httpLinkWithAuthToken,
     cache: new InMemoryCache()
 });
 export default client;

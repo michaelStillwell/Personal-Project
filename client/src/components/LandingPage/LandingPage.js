@@ -1,9 +1,7 @@
 // React Imports
 import React, { Component } from 'react';
 import { AUTH_TOKEN } from '../../constants';
-import { connect } from 'react-redux';
 
-import { getEmployees } from '../../ducks/reducer';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 

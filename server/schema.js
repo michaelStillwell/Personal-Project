@@ -40,11 +40,11 @@ const schema = buildSchema(`
     }
 
     type Query {
-        getEmployee(id: ID!): Employee
+        getEmployee(id: ID!): [Employee]
         getAllEmployees: [Employee]
-        getProduct(id: ID!): Product
+        getProduct(id: ID!): [Product]
         getAllProducts: [Product]
-        getOrder(id: ID!): Order
+        getOrder(id: ID!): [Order]
     }
 
     type Mutation {
