@@ -21,9 +21,11 @@ const schema = buildSchema(`
         description: String
         price: Float
         stock: Int
+        amount: Int
     }
 
     type Order {
+        order_id: Int
         product: [Product]
     }
 
@@ -52,7 +54,7 @@ const schema = buildSchema(`
         getAllEmployees: [Employee]
         getProduct(id: ID!): [Product]
         getAllProducts: [Product]
-        getOrder(id: ID!): [Product]
+        getAllOrders(id: ID!): Order
     }
 
     type Mutation {
@@ -63,7 +65,7 @@ const schema = buildSchema(`
         createEmployee(input: EmployeeInput): [Employee]
         updateEmployee(id: ID!, input: EmployeeInput): [Employee]
         deleteEmployee(id: ID!): [Employee]
-        createOrder(products: [OrderInput]): [Product]
+        createOrder(products: [OrderInput]): String
     }
 `);
 
@@ -77,18 +79,20 @@ class Employee {
 };
 
 class Product {
-    constructor(id, name, description, price, stock) {
-        this.id = id, 
-        this.name = name, 
-        this.description = description, 
-        this.price = price, 
-        this.stock = stock
+    constructor(id, name, description, price, stock, amount) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.amount = amount;
     }
 };
 
 class Order {
-    constructor(product) {
-        this.product = product
+    constructor(order_id, product) {
+        this.order_id = order_id;
+        this.product = [product];
     }
 };
 
@@ -169,23 +173,21 @@ const root = {
             })
             .catch(err => console.log('DELETE PRODUCT ERROR: ', err));
     },
-    getOrder: ({id}) => {
-        return db.any(`SELECT * FROM emp_order AS e JOIN product AS p ON p.id = e.product WHERE order_id = ${id};`)
+    getAllOrders: ({id}) => {
+        return db.any(`SELECT * FROM emp_order AS e JOIN product AS p ON p.id = e.product WHERE employee_id = ${id};`)
             .then(info => {
-                console.log(info);
-                return info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock));
+                let a = [];
+                info.map(x => {
+                    
+                });
             })
             .catch(err => console.log('GET ORDER: ', err));
     },
     createOrder: ({products}) => {
-        return products.map(x => (
-        db.any(`
-            INSERT INTO emp_order (order_id, product, employee_id, completion, num_of_product) VALUES (${x.order_id}, ${x.product}, ${x.employee_id}, ${x.completion}, ${x.num_of_product});
-            SELECT * FROM emp_order AS e JOIN product AS p ON p.id = e.product;
-        `)
-            .then(info => info.map(x => new Product(x.product, x.name, x.description, x.price, x.stock)))
-            .catch(err => console.log('CREATE ORDER ERROR: ', err))
-        ));
+        console.log(products)
+        products.map(x => db.none(`INSERT INTO emp_order (order_id, product, employee_id, completion, num_of_product) VALUES (
+            ${x.order_id}, ${x.product}, ${x.employee_id}, ${x.completion}, ${x.num_of_product});`));
+        return 'Finished';
     },
 };
 

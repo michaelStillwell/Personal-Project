@@ -26,17 +26,6 @@ class LandingPage extends Component {
         this._confirm = this._confirm.bind(this);
     }
 
-    render() {
-        return (
-            <div>
-                <h1>Welcome!</h1>
-                <input type="text" onChange={e => this.setState({ usernameInput: e.target.value})} />
-                <input type="text" onChange={e => this.setState({ passwordInput: e.target.value})} />
-                <button type="submit" onClick={() => this._confirm()} >Login</button>
-            </div>
-        )
-    }
-
     _confirm = async () => {
         const { usernameInput, passwordInput } = this.state;
         
@@ -53,6 +42,17 @@ class LandingPage extends Component {
 
     _saveUserData = token => {
         localStorage.setObject(AUTH_TOKEN, token);
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>Welcome!</h1>
+                <input type="text" onChange={e => this.setState({ usernameInput: e.target.value})} />
+                <input type="text" onChange={e => this.setState({ passwordInput: e.target.value})} />
+                <button type="submit" onClick={() => this._confirm()} >Login</button>
+            </div>
+        )
     }
 }
 
