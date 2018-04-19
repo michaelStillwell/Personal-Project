@@ -39,6 +39,14 @@ const schema = buildSchema(`
         emp_type: String
     }
 
+    input OrderInput {
+        order_id: Int
+        product: Int
+        employee_id: Int
+        num_of_product: Int
+        completion: Boolean
+    }
+
     type Query {
         getEmployee(id: ID!): [Employee]
         getAllEmployees: [Employee]
@@ -55,6 +63,7 @@ const schema = buildSchema(`
         createEmployee(input: EmployeeInput): [Employee]
         updateEmployee(id: ID!, input: EmployeeInput): [Employee]
         deleteEmployee(id: ID!): [Employee]
+        createOrder(products: [OrderInput]): [Product]
     }
 `);
 
@@ -161,16 +170,28 @@ const root = {
             .catch(err => console.log('DELETE PRODUCT ERROR: ', err));
     },
     getOrder: ({id}) => {
-        return db.any(`SELECT COUNT(product), product, order_id, employee FROM emp_order WHERE order_id = ${id} GROUP BY product, order_id, employee;`)
+        return db.any(`SELECT * FROM emp_order AS e JOIN product AS p ON p.id = e.product WHERE order_id = ${id};`)
             .then(info => {
-
+                console.log(info);
+                return info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock));
             })
             .catch(err => console.log('GET ORDER: ', err));
+    },
+    createOrder: ({products}) => {
+        return products.map(x => (
+        db.any(`
+            INSERT INTO emp_order (order_id, product, employee_id, completion, num_of_product) VALUES (${x.order_id}, ${x.product}, ${x.employee_id}, ${x.completion}, ${x.num_of_product});
+            SELECT * FROM emp_order AS e JOIN product AS p ON p.id = e.product;
+        `)
+            .then(info => info.map(x => new Product(x.product, x.name, x.description, x.price, x.stock)))
+            .catch(err => console.log('CREATE ORDER ERROR: ', err))
+        ));
     },
 };
 
 module.exports = {schema, root};
 
+// SELECT COUNT(product), product, order_id, employee FROM emp_order WHERE order_id = ${id} GROUP BY product, order_id, employee;
 // SELECT COUNT(emp_order.product), emp_order.order_id, emp_order.employee, product.name FROM emp_order 
 // JOIN product ON emp_order.product = product.id WHERE order_id = 1 
 // GROUP BY emp_order.product, emp_order.order_id, emp_order.employee, product.name;

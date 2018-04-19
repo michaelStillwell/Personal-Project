@@ -6,6 +6,7 @@ import { Query } from 'react-apollo';
 const GET_PRODUCT_BY_ID = gql`
     query($id: ID!) {
         getProduct(id: $id) {
+            id
             name
             description
             price
@@ -30,12 +31,18 @@ class ProductPage extends Component {
                             <p>{info.price.toFixed(2)}</p>
                             <p>{info.stock}</p>
                             <button onClick={() => {
+                                let info2 = Object.assign({}, info, { count: 1 });
                                 if ( localStorage.getObject('|||||') ) {
-                                    let item = localStorage.getObject('|||||');
-                                    item.push(info);
-                                    return localStorage.setObject('|||||', item);
+                                    let item = localStorage.getObject('|||||'), filtered = item.filter(x => x.id === info.id);
+                                    if ( filtered.length ) {
+                                        filtered[0].count += 1;
+                                        return localStorage.setObject('|||||', item);
+                                    } else {
+                                        item.push(info2);
+                                        return localStorage.setObject('|||||', item);
+                                    }
                                 } else {
-                                    localStorage.setObject('|||||', [info]);
+                                    return localStorage.setObject('|||||', [info2]);
                                 }
                             }}>Add to Order</button>
                         </div>
