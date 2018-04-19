@@ -15,6 +15,7 @@ import App from './components/App';
 import store from './store';
 
 Storage.prototype.setObject = function(key, value) {
+    console.log(JSON.stringify(value));
     this.setItem(key, JSON.stringify(value));
 };
 

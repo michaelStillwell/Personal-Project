@@ -5,6 +5,16 @@ import { AUTH_TOKEN } from '../../constants';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
+const LOGIN_MUTATION = gql`
+    mutation($username: String, $password: String) {
+        login(username: $username, password: $password) {
+            id
+            username
+            emp_type
+        }
+    }
+`;
+
 class LandingPage extends Component {
     constructor(props) {
         super(props);
@@ -37,9 +47,8 @@ class LandingPage extends Component {
             }
         });
         const token = result.data.login[0];
-        // console.log(token);
         this._saveUserData(token);
-        this.props.history.push('/');
+        this.props.history.push('/browse');
     }
 
     _saveUserData = token => {
@@ -47,13 +56,4 @@ class LandingPage extends Component {
     }
 }
 
-const LOGIN_MUTATION = gql`
-    mutation($username: String, $password: String) {
-        login(username: $username, password: $password) {
-            id
-            username
-            emp_type
-        }
-    }
-`;
 export default graphql(LOGIN_MUTATION, { name: 'loginMutation' })(LandingPage);

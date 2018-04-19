@@ -44,7 +44,7 @@ const schema = buildSchema(`
         getAllEmployees: [Employee]
         getProduct(id: ID!): [Product]
         getAllProducts: [Product]
-        getOrder(id: ID!): [Order]
+        getOrder(id: ID!): [Product]
     }
 
     type Mutation {
@@ -161,10 +161,16 @@ const root = {
             .catch(err => console.log('DELETE PRODUCT ERROR: ', err));
     },
     getOrder: ({id}) => {
-        return db.any(`SELECT * FROM emp_order WHERE order_id = ${id}`)
-            .then(info => new Order(info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock))))
+        return db.any(`SELECT COUNT(product), product, order_id, employee FROM emp_order WHERE order_id = ${id} GROUP BY product, order_id, employee;`)
+            .then(info => {
+
+            })
             .catch(err => console.log('GET ORDER: ', err));
     },
 };
 
 module.exports = {schema, root};
+
+// SELECT COUNT(emp_order.product), emp_order.order_id, emp_order.employee, product.name FROM emp_order 
+// JOIN product ON emp_order.product = product.id WHERE order_id = 1 
+// GROUP BY emp_order.product, emp_order.order_id, emp_order.employee, product.name;
