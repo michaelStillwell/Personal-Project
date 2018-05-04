@@ -54,7 +54,7 @@ const schema = buildSchema(`
         getAllEmployees: [Employee]
         getProduct(id: ID!): [Product]
         getAllProducts: [Product]
-        getAllOrders(id: ID!): Order
+        getAllOrders(id: ID!): [Order]
     }
 
     type Mutation {
@@ -92,7 +92,7 @@ class Product {
 class Order {
     constructor(order_id, product) {
         this.order_id = order_id;
-        this.product = [product];
+        this.product = product;
     }
 };
 
@@ -176,10 +176,34 @@ const root = {
     getAllOrders: ({id}) => {
         return db.any(`SELECT * FROM emp_order AS e JOIN product AS p ON p.id = e.product WHERE employee_id = ${id};`)
             .then(info => {
-                let a = [];
+                let
+                    tempObj = {}, tempArr = [], tempProducts = [], endProducts = [];
+
                 info.map(x => {
-                    
+                    tempProducts.push({
+                        id: x.id,
+                        name: x.name,
+                        description: x.description,
+                        price: x.price,
+                        stock: x.stock,
+                        amount: x.num_of_product,
+                        order_id: x.order_id
+                    });
+                    tempObj = {
+                        order_id: x.order_id,
+                        products: tempProducts
+                    };
+    
+                    if ( !tempArr.find(e => e.order_id === x.order_id) ) {
+                        tempArr.push(tempObj);
+                    }
                 });
+
+                tempArr.map(a => {
+                    endProducts = a.products.filter(b => b.order_id === a.order_id);
+                    a.products = endProducts;
+                });
+                return tempArr.map(x => new Order(x.order_id, x.products));
             })
             .catch(err => console.log('GET ORDER: ', err));
     },
