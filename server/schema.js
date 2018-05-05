@@ -174,7 +174,7 @@ const root = {
             .catch(err => console.log('DELETE PRODUCT ERROR: ', err));
     },
     getAllOrders: ({id}) => {
-        return db.any(`SELECT * FROM emp_order AS e JOIN product AS p ON p.id = e.product WHERE employee_id = ${id};`)
+        return db.any(`SELECT * FROM emp_order AS e JOIN product AS p ON p.id = e.product WHERE employee_id = ${id} ORDER BY order_id;`)
             .then(info => {
                 let
                     tempObj = {}, tempArr = [], tempProducts = [], endProducts = [];
@@ -208,7 +208,6 @@ const root = {
             .catch(err => console.log('GET ORDER: ', err));
     },
     createOrder: ({products}) => {
-        console.log(products)
         products.map(x => db.none(`INSERT INTO emp_order (order_id, product, employee_id, completion, num_of_product) VALUES (
             ${x.order_id}, ${x.product}, ${x.employee_id}, ${x.completion}, ${x.num_of_product});`));
         return 'Finished';

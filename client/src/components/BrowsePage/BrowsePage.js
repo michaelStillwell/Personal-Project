@@ -11,13 +11,13 @@ class BrowsePage extends Component {
     }
     
     render() {
-        return this.props.productsBool ? (
+        return this.props.getProductsBool ? (
             <h1>Loading...</h1>
         ) : (
             <div>
                 <h1>Browse</h1>
                 <ul>
-                    {this.props.productsList.map((x, y) => <Link to={`/product/${x.id}`} key={y}><li>{x.name}</li></Link>)}
+                    {this.props.getProductsList.map((x, y) => <Link to={`/product/${x.id}`} key={y}><li>{x.name}</li></Link>)}
                 </ul>
             </div>
         )

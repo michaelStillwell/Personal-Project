@@ -3,13 +3,21 @@ import gql from 'graphql-tag';
 
 // CONSTANTS
 const
-    GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
+    GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS',
+    GET_ALL_ORDERS   = 'GET_ALL_ORDERS',
+    POST_ORDER       = 'POST_ORDER';
     
     // TEST = 'TEST';
 
 const defualtState = {
-    productsBool: false,
-    productsList: [],
+    getProductsBool: false,
+    getProductsList: [],
+    
+    getOrdersBool: false,
+    getOrdersList: [],
+
+    postOrdersBool: false,
+    postOrdersResp: {},
 };
 
 // export const getEmployees = () => {
@@ -58,6 +66,62 @@ export function getProducts() {
     };
 };
 
+export function getOrders(id) {
+    return {
+        type: GET_ALL_ORDERS,
+        payload: (
+            client.query({
+                query: gql`
+                    query($id: ID!) {
+                        getAllOrders(id: $id) {
+                            order_id
+                            product {
+                                id
+                                name
+                                description
+                                price
+                                stock
+                                amount
+                            }
+                        }
+                    }
+                `,
+                variables: {
+                    id: id
+                }
+            }).then(response => response.data.getAllOrders)
+            .catch(err => console.log('GET ALL ORDERS: ', err))
+        )
+    };
+};
+
+export function postOrder(order_id, product, employee_id, completion, num_of_product) {
+    return {
+        type: POST_ORDER,
+        payload: (
+            client.mutate({
+                mutation: gql`
+                    mutation($products: [OrderInput]) {
+                        createOrder(products: $products)
+                    }
+                `,
+                variables: {
+                    products: {
+                        // ## ${x.order_id}, ${x.product}, ${x.employee_id}, ${x.completion}, ${x.num_of_product}
+                        order_id: order_id,
+                        product: product,
+                        employee_id: employee_id,
+                        completion: completion,
+                        num_of_product: num_of_product
+                    }
+                }
+            })
+        ).then(response => console.log(response.data))
+        .catch(err => console.log('POST ORDER: ', err))
+    }
+};
+
+
 // REDUCER
 export default function reducer(state = defualtState, action) {
     switch(action.type) {
@@ -70,14 +134,33 @@ export default function reducer(state = defualtState, action) {
         // case `${TEST}_REJECTED`:
         //     return Object.assign({}, state, { employeeListBool: false });
         case `${GET_ALL_PRODUCTS}_PENDING`:
-            return Object.assign({}, state, { productsBool: true });
+            return Object.assign({}, state, { getProductsBool: true });
 
         case `${GET_ALL_PRODUCTS}_FULFILLED`:
-            return Object.assign({}, state, { productsBool: false, productsList: action.payload });
+            return Object.assign({}, state, { getProductsBool: false, getProductsList: action.payload });
 
         case `${GET_ALL_PRODUCTS}_REJECTED`:
-            return Object.assign({}, state, { productsBool: false });
+            return Object.assign({}, state, { getProductsBool: false });
 
+        case `${GET_ALL_ORDERS}_PENDING`:
+            return Object.assign({}, state, { getOrdersBool: true });
+        
+        case `${GET_ALL_ORDERS}_FULFILLED`:
+            return Object.assign({}, state, { getOrdersBool: false, getOrdersList: action.payload });
+        
+        case `${GET_ALL_ORDERS}_REJECTED`:
+            return Object.assign({}, state, { getOrdersBool: false });
+
+        case `${POST_ORDER}_PENDING`: 
+            return Object.assign({}, state, { postOrdersBool: true });
+
+        case `${POST_ORDER}_FULFILLED`: 
+            return Object.assign({}, state, { postOrdersBool: false, postOrdersResp: action.payload });
+
+        case `${POST_ORDER}_REJECTED`: 
+            return Object.assign({}, state, { postOrdersBool: false });
+
+        
         default:
             return state;
     }

@@ -1,7 +1,9 @@
 // React Imports
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
-import { graphql, compose } from 'react-apollo';
+// import { graphql, compose } from 'react-apollo';
+import { connect } from 'react-redux';
+import { getOrders, postOrder } from '../../ducks/reducer';
 
 const CREATE_ORDER = gql`
     mutation($products: [OrderInput]) {
@@ -26,24 +28,8 @@ const GET_ALL_ORDERS = gql`
 `;
 
 class OrdersPage extends Component {
-    _placeOrder = async () => {
-        let send = localStorage.getObject('|||||');
-        console.log(this.props)
-        let result = await this.props.createOrder({
-            variables: {
-                products: send
-            }
-        });
-        console.log(result);
-    }
-
-    _getOrders = async () => {
-        let result = await this.props.getAllOrders({
-            variables: {
-                id: 2
-            }
-        });
-        return result;
+    componentDidMount() {
+        this.props.getOrders(localStorage.getObject('auth-token').id);
     }
 
     render() {
@@ -52,20 +38,33 @@ class OrdersPage extends Component {
                 <h1>Orders</h1>
                 <h3>Current Order:</h3>
                 <ul>
-                    {localStorage.getObject('|||||') ? localStorage.getObject('|||||').map(x => <li>{x.name}</li>) : false}
+                    {localStorage.getObject('|||||') ? localStorage.getObject('|||||').map(x => <li>{x.name} - num: {x.count}</li>) : false}
                 </ul>
-                <ul>
-                    {}
-                </ul>
+                <label>Past Orders:</label>
+                {this.props.getOrdersBool ? (
+                    <h1>Loading...</h1>
+                ) : (
+                    <ul>
+                        {this.props.getOrdersList.map(x => <li>
+                            <label>{x.order_id}</label>
+                            <ul>
+                                <li>{x.product.map(y => <li>{y.name}</li>)}</li>
+                            </ul>
+                        </li>)}
+                    </ul>
+                )}
                 <button onClick={() => {
-                    this._placeOrder().catch(err => console.log(err));
+                    const 
+                        order_id = this.props.getOrdersList[this.props.getOrdersList.length-1].order_id + 1,
+                        employee_id = localStorage.getObject('auth-token').id;
+                    
+                    localStorage.getObject('|||||').map(x => this.props.postOrder(order_id, x.id, employee_id, false, x.count));
+                    localStorage.removeItem('|||||');
                 }}>Place Order!</button>
             </div>
         )
     }
 }
 
-export default compose(
-    graphql(CREATE_ORDER, {name: 'createOrder'}),
-    graphql(GET_ALL_ORDERS, {name: 'getAllOrders', options: {id: 2}})
-)(OrdersPage);
+const mapStateToProps = state => state;
+export default connect(mapStateToProps, { getOrders, postOrder })(OrdersPage);
