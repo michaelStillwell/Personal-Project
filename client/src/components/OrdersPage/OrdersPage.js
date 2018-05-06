@@ -5,28 +5,6 @@ import gql from 'graphql-tag';
 import { connect } from 'react-redux';
 import { getOrders, postOrder } from '../../ducks/reducer';
 
-const CREATE_ORDER = gql`
-    mutation($products: [OrderInput]) {
-        createOrder(products: $products)
-    }
-`;
-
-const GET_ALL_ORDERS = gql`
-    query($id: ID!) {
-        getAllOrders(id: $id) {
-            order_id
-            product {
-                id
-                name
-                description
-                price
-                stock
-                amount
-            }
-        }
-    }
-`;
-
 class OrdersPage extends Component {
     componentDidMount() {
         this.props.getOrders(localStorage.getObject('auth-token').id);
@@ -45,7 +23,7 @@ class OrdersPage extends Component {
                     <h1>Loading...</h1>
                 ) : (
                     <ul>
-                        {this.props.getOrdersList.map(x => <li>
+                        {this.props.getOrdersList.filter(e => e.completion === false).map(x => <li>
                             <label>{x.order_id}</label>
                             <ul>
                                 <li>{x.product.map(y => <li>{y.name}</li>)}</li>
@@ -53,14 +31,16 @@ class OrdersPage extends Component {
                         </li>)}
                     </ul>
                 )}
-                <button onClick={() => {
-                    const 
-                        order_id = this.props.getOrdersList[this.props.getOrdersList.length-1].order_id + 1,
-                        employee_id = localStorage.getObject('auth-token').id;
-                    
-                    localStorage.getObject('|||||').map(x => this.props.postOrder(order_id, x.id, employee_id, false, x.count));
-                    localStorage.removeItem('|||||');
-                }}>Place Order!</button>
+                {localStorage.getObject('|||||') ? (
+                    <button onClick={() => {
+                        const 
+                            order_id = this.props.getOrdersList[this.props.getOrdersList.length-1].order_id + 1,
+                            employee_id = localStorage.getObject('auth-token').id;
+
+                        localStorage.getObject('|||||').map(x => this.props.postOrder((order_id <= 0 || !Number(order_id) ? 0 : order_id), x.id, employee_id, false, x.count));
+                        localStorage.removeItem('|||||');
+                    }}>Place Order!</button>
+                ) : false}
             </div>
         )
     }

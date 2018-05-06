@@ -13,6 +13,10 @@ class Header extends Component {
                     <Link to="/">Home</Link>
                     <Link to="/browse">Browse</Link>
                     <Link to="/orders">Orders</Link>
+                    {localStorage.getObject('auth-token').emp_type === "Owner" ? (
+                        <Link to="/employees">Employees</Link>
+                    ) : false}
+                    <Link to="/">Logout</Link>
                 </div>
             </div>
         ) : (

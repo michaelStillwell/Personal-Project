@@ -75,6 +75,7 @@ export function getOrders(id) {
                     query($id: ID!) {
                         getAllOrders(id: $id) {
                             order_id
+                            completion
                             product {
                                 id
                                 name
@@ -120,7 +121,6 @@ export function postOrder(order_id, product, employee_id, completion, num_of_pro
         .catch(err => console.log('POST ORDER: ', err))
     }
 };
-
 
 // REDUCER
 export default function reducer(state = defualtState, action) {

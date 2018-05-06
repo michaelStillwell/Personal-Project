@@ -26,6 +26,7 @@ const schema = buildSchema(`
 
     type Order {
         order_id: Int
+        completion: Boolean
         product: [Product]
     }
 
@@ -71,7 +72,7 @@ const schema = buildSchema(`
 
 class Employee {
     constructor(id, username, password, emp_type) {
-        this.id = id;
+        this.id       = id;
         this.username = username;
         this.password = password;
         this.emp_type = emp_type;
@@ -80,19 +81,20 @@ class Employee {
 
 class Product {
     constructor(id, name, description, price, stock, amount) {
-        this.id = id;
-        this.name = name;
+        this.id          = id;
+        this.name        = name;
         this.description = description;
-        this.price = price;
-        this.stock = stock;
-        this.amount = amount;
+        this.price       = price;
+        this.stock       = stock;
+        this.amount      = amount;
     }
 };
 
 class Order {
-    constructor(order_id, product) {
-        this.order_id = order_id;
-        this.product = product;
+    constructor(order_id, product, completion) {
+        this.order_id   = order_id;
+        this.product    = product;
+        this.completion = completion;
     }
 };
 
@@ -191,6 +193,7 @@ const root = {
                     });
                     tempObj = {
                         order_id: x.order_id,
+                        completion: x.completion,
                         products: tempProducts
                     };
     
@@ -203,7 +206,7 @@ const root = {
                     endProducts = a.products.filter(b => b.order_id === a.order_id);
                     a.products = endProducts;
                 });
-                return tempArr.map(x => new Order(x.order_id, x.products));
+                return tempArr.map(x => new Order(x.order_id, x.products, x.completion));
             })
             .catch(err => console.log('GET ORDER: ', err));
     },
