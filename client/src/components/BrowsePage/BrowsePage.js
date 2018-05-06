@@ -1,8 +1,8 @@
 // React Imports
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
 import { getProducts } from '../../ducks/reducer';
 
 import '../../Assets/css/BrowsePage.min.css';

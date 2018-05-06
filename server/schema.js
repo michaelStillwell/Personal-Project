@@ -39,6 +39,7 @@ const schema = buildSchema(`
 
     input EmployeeInput {
         username: String
+        password: String
         emp_type: String
     }
 
@@ -110,14 +111,14 @@ const root = {
             .catch(err => console.log('GET EMPLOYEE ERROR: ', err));
     },
     getAllEmployees: () => {
-        return db.any(`SELECT * FROM employee`)
+        return db.any(`SELECT * FROM employee ORDER BY id`)
             .then(info => info.map(x => new Employee(x.id, x.username, x.password, x.emp_type)))
             .catch(err => console.log('GET ALL EMPLOYEES ERROR: ', err));
     },
     createEmployee: (arg) => {
         return db.any(`
                 INSERT INTO employee (username, password, emp_type) VALUES ('${arg.input.username}', '${arg.input.password}', '${arg.input.emp_type}');
-                SELECT * FROM employee;
+                SELECT * FROM employee ORDER BY id;
             `)
             .then(info => info.map(x => new Employee(x.id, x.username, x.password, x.emp_type)))
             .catch(err => console.log('EMPLOYEE ERROR: ', err))
@@ -125,7 +126,7 @@ const root = {
     updateEmployee: (arg) => {
         return db.any(`
                 UPDATE employee SET username = '${arg.input.username}', password = '${arg.input.password}', emp_type = '${arg.input.emp_type}' WHERE id = ${arg.id};
-                SELECT * FROM employee WHERE id = ${arg.id}
+                SELECT * FROM employee  ORDER BY id;
             `)
             .then(info => info.map(x => new Employee(x.id, x.username, x.password, x.emp_type)))
             .catch(err => console.log('EMPLOYEE ERROR: ', err))
