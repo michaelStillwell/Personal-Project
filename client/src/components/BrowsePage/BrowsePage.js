@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 import { getProducts } from '../../ducks/reducer';
 
+import '../../Assets/css/BrowsePage.min.css';
+
 class BrowsePage extends Component {
     componentDidMount() {
         this.props.getProducts();

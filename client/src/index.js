@@ -14,6 +14,8 @@ import { ApolloLink } from 'apollo-client-preset'
 import App from './components/App';
 import store from './store';
 
+import './Assets/css/default.min.css';
+
 Storage.prototype.setObject = function(key, value) {
     this.setItem(key, JSON.stringify(value));
 };

@@ -1,0 +1,41 @@
+@import '_colors.scss';
+
+body {
+    background: #D8F771;
+}
+
+.header {
+    background: $header_background_color;
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    h1 {
+        color: $header_text_color;
+        margin: 5px;
+    }
+
+    .navbar {
+        background: $header_navbar_background_color;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+        border: solid 5px #1E9977;
+        border-radius: 2px;
+
+        a {
+            color: $header_link_color;
+            margin: 0 7px;
+            padding: 5px 3px 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 250ms ease;
+
+            &:hover {
+                background: $header_link_hover_color;
+            }
+        }
+    }
+
+}

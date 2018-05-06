@@ -8,7 +8,7 @@ const
     rename = require('gulp-rename'),
     changed = require('gulp-changed');
 
-let SCSS_SRC  = './client/src/Assets/scss/**/*.scss';
+let SCSS_SRC  = './client/src/Assets/scss/*.scss';
 let SCSS_DEST = './client/src/Assets/css';
 
 gulp.task('compile_scss', function() {
@@ -25,3 +25,4 @@ gulp.task('watch_scss', function() {
 });
 
 gulp.task('default', ['watch_scss'])
+gulp.task('BrowsePage', ['watch_scss'])

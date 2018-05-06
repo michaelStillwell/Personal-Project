@@ -37,7 +37,7 @@ class LandingPage extends Component {
         });
         const token = result.data.login[0];
         this._saveUserData(token);
-        this.props.history.push('/browse');
+        window.location.reload();
     }
 
     _saveUserData = token => {
@@ -47,7 +47,7 @@ class LandingPage extends Component {
     render() {
         return (
             <div>
-                <h1>Welcome!</h1>
+                <h1>Login:</h1>
                 <input type="text" onChange={e => this.setState({ usernameInput: e.target.value})} />
                 <input type="text" onChange={e => this.setState({ passwordInput: e.target.value})} />
                 <button type="submit" onClick={() => this._confirm()} >Login</button>
