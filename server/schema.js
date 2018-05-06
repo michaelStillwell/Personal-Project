@@ -126,15 +126,15 @@ const root = {
     updateEmployee: (arg) => {
         return db.any(`
                 UPDATE employee SET username = '${arg.input.username}', password = '${arg.input.password}', emp_type = '${arg.input.emp_type}' WHERE id = ${arg.id};
-                SELECT * FROM employee  ORDER BY id;
+                SELECT * FROM employee ORDER BY id;
             `)
             .then(info => info.map(x => new Employee(x.id, x.username, x.password, x.emp_type)))
             .catch(err => console.log('EMPLOYEE ERROR: ', err))
     },
-    deleteEmplooyee: ({id}) => {
+    deleteEmployee: ({id}) => {
         return db.any(`
                 DELETE FROM employee WHERE id = ${id};
-                SELECT FROM employee;
+                SELECT * FROM employee ORDER BY id;
             `)
             .then(info => info.map(x => new Employee(x.id, x.username, x.password, x.emp_type)))
             .catch(err => console.log('EMPLOYEE ERROR: ', err))

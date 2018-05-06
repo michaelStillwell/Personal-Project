@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { 
-    getEmployees, putEmployee, deleteEmployee
+    getEmployees, postEmployee, putEmployee, deleteEmployee
 } from '../../ducks/reducer';
 
 class EmployeePage extends Component {
@@ -14,6 +14,7 @@ class EmployeePage extends Component {
             username: '',
             password: '',
             emp_type: '',
+            create: false,
             edit: false,
             delete: false,
             selected: null
@@ -57,24 +58,43 @@ class EmployeePage extends Component {
                         ) : (
                             <li>
                                 {x.username}
-                                <button onClick={() => this.setState({edit: !this.state.edit, selected: y})}>edit</button>
+                                <button onClick={() => this.setState({edit: true, delete: false, create: false, selected: y})}>edit</button>
                                 {this.state.delete &&  this.state.selected === y ? (
                                     <div>
                                         <h5>Are you sure you want to delete {x.username}?</h5>
-                                        <button onClick={() => this.props.deleteEmployee()}>Yes</button>
+                                        <button onClick={() => this.props.deleteEmployee(x.id).then(() => this.setState({delete: false, edit: false, selected: null}))}>Yes</button>
                                         <button onClick={() => this.setState({ delete: false, selected: null})}>No</button>
                                     </div>
                                 ) : (
-                                    <button onClick={() => this.setState({delete: true, selected: y})}>delete</button>
+                                    <button onClick={() => this.setState({delete: true, edit: false, create: false, selected: y})}>delete</button>
                                 )}
                             </li>
                         )
                     ))}
                 </ul>
+                    {this.state.create ? (
+                        <div>
+                            <input type="text" onChange={e => this.setState({ username: e.target.value})} placeholder="Username" />
+                            <input type="text" onChange={e => this.setState({ password: e.target.value})} placeholder="Password" />
+                            <select onChange={e => this.setState({emp_type: e.target.value})} defaultValue="null">
+                                <option value="null">--Select a Type--</option>
+                                <option value="Owner">Owner</option>
+                                <option value="Warehouse">Warehouse</option>
+                                <option value="Field">Field</option>
+                            </select>
+                            <button onClick={() => this.state.username && this.state.password && this.state.emp_type !== 'null' ?
+                                this.props.postEmployee({username: this.state.username, password: this.state.password, emp_type: this.state.emp_type}).then(() => this.setState({ create: false, username: '', password: '', emp_type: '' }))
+                                : alert('Fill all the fields first')
+                            }>create</button>
+                            <button onClick={() => this.setState({create: false, username: '', password: '', emp_type: ''})}>cancel</button>
+                        </div>
+                    ) : (
+                        <button onClick={() => this.setState({create: true, delete: false, edit: false})}>Create New Employee</button>
+                    )}
             </div>
         )
     }
 }
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps, { getEmployees, putEmployee, deleteEmployee })(EmployeePage);
+export default connect(mapStateToProps, { getEmployees, postEmployee, putEmployee, deleteEmployee })(EmployeePage);

@@ -8,8 +8,10 @@ const
     GET_ALL_EMPLOYEES = 'GET_ALL_EMPLOYEES',
 
     POST_ORDER        = 'POST_ORDER',
+    POST_EMPLOYEE     = 'POST_EMPLOYEE',
     
     PUT_EMPLOYEE      = 'PUT_EMPLOYEE',
+
     DELETE_EMPLOYEE   = 'DELETE_EMPLOYEE';
     
     // TEST = 'TEST';
@@ -135,6 +137,28 @@ export function postOrder(order_id, product, employee_id, completion, num_of_pro
     }
 };
 
+export function postEmployee(input) {
+    return {
+        type: POST_EMPLOYEE,
+        payload: client.mutate({
+            mutation: gql`
+                mutation($input: EmployeeInput) {
+                    createEmployee(input: $input) {
+                        id
+                        username
+                        password
+                        emp_type
+                    }
+                }
+            `,
+            variables: {
+                input : input
+            }
+        }).then(response => response.data.createEmployee)
+        .catch(err => console.log('POST EMPLOYEE: ', err))
+    }
+};
+
 export function putEmployee(id, input) {
     return {
         type: PUT_EMPLOYEE,
@@ -166,12 +190,23 @@ export function deleteEmployee(id) {
         type: DELETE_EMPLOYEE,
         payload: (
             client.mutate({
-                mutation: gql``,
+                mutation: gql`
+                    mutation($id: ID!) {
+                        deleteEmployee(id: $id) {
+                            id
+                            username
+                            password
+                            emp_type
+                        }
+                    }
+                `,
                 variables: {
                     id: id
                 }
             })
-        ).then(response => console.log(response.data))
+        ).then(response => (
+            response.data.deleteEmployee
+        ))
         .catch(err => console.log('EMPLOYEE: ', err))
     }
 };
@@ -207,7 +242,7 @@ export default function reducer(state = defualtState, action) {
             return Object.assign({}, state, { getOrdersBool: false });
 
         case `${GET_ALL_EMPLOYEES}_PENDING`:
-            return Object.assign({}, state, { getEmployeesBool: false });
+            return Object.assign({}, state, { getEmployeesBool: true });
 
         case `${GET_ALL_EMPLOYEES}_FULFILLED`:
             return Object.assign({}, state, { getEmployeesBool: false, getEmployeesList: action.payload });
@@ -224,14 +259,32 @@ export default function reducer(state = defualtState, action) {
         case `${POST_ORDER}_REJECTED`: 
             return Object.assign({}, state, { postOrdersBool: false });
 
+        case `${POST_EMPLOYEE}_PENDING`:
+            return Object.assign({}, state, { postEmployeeBool: true });
+
+        case `${POST_EMPLOYEE}_FULFILLED`:
+            return Object.assign({}, state, { postEmployeeBool: false, getEmployeesList: action.payload });
+
+        case `${POST_EMPLOYEE}_REJECTED`:
+            return Object.assign({}, state, { postEmployeeBool: false });
+
         case `${PUT_EMPLOYEE}_PENDING`:
-            return Object.assign({}, state, { putEmployeeBool: false });
+            return Object.assign({}, state, { putEmployeeBool: true });
 
         case `${PUT_EMPLOYEE}_FULFILLED`:
             return Object.assign({}, state, { putEmployeeBool: false, putEmployeeList: action.payload });
 
         case `${PUT_EMPLOYEE}_REJECTED`:
-            return Object.assign({}, state, { putEmployeeBool: false });            
+            return Object.assign({}, state, { putEmployeeBool: false });
+            
+        case `${DELETE_EMPLOYEE}_PENDING`:
+            return Object.assign({}, state, { deleteEmployeeBool: true });
+
+        case `${DELETE_EMPLOYEE}_FULFILLED`:
+            return Object.assign({}, state, { deleteEmployeeBool: false, getEmployeesList: action.payload });
+
+        case `${DELETE_EMPLOYEE}_REJECTED`:
+            return Object.assign({}, state, { deleteEmployeeBool: false });
 
         default:
             return state;

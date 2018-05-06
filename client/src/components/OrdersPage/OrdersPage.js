@@ -17,36 +17,34 @@ class OrdersPage extends Component {
                 <ul>
                     {localStorage.getObject('|||||') ? localStorage.getObject('|||||').map(x => <li>{x.name} - num: {x.count}</li>) : false}
                 </ul>
-                <label>Incomplete Orders:</label>
                 {this.props.getOrdersBool ? (
                     <h1>Loading...</h1>
                 ) : (
-                    <ul>
-                        {this.props.getOrdersList.filter(e => e.completion === false).map(x => (
-                            <li>
-                                <label>{x.order_id}</label>
-                                <ul>
-                                    {x.product.map(y => <li>{y.name}</li>)}
-                                </ul>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-                // TODO: Find a way to do this without repeating
-                <label>Completed Orders:</label>
-                {this.props.getOrdersBool ? (
-                    <h1>Loading...</h1>
-                ) : (
-                    <ul>
-                        {this.props.getOrdersList.filter(e => e.completion === true).map(x => (
-                            <li>
-                                <label>{x.order_id}</label>
-                                <ul>
-                                    {x.product.map(y => <li>{y.name}</li>)}
-                                </ul>
-                            </li>
-                        ))}
-                    </ul>
+                    <div>
+                        {/* TODO: Find a way to do this without repeating */}
+                        <label>Incomplete Orders:</label>
+                        <ul>
+                            {this.props.getOrdersList.filter(e => e.completion === false).map(x => (
+                                <li>
+                                    <label>{x.order_id}</label>
+                                    <ul>
+                                        {x.product.map(y => <li>{y.name}</li>)}
+                                    </ul>
+                                </li>
+                            ))}
+                        </ul>
+                        <label>Completed Orders:</label>
+                        <ul>
+                            {this.props.getOrdersList.filter(e => e.completion === true).map(x => (
+                                <li>
+                                    <label>{x.order_id}</label>
+                                    <ul>
+                                        {x.product.map(y => <li>{y.name}</li>)}
+                                    </ul>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 )}
                 {localStorage.getObject('|||||') ? (
                     <button onClick={() => {
