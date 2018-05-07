@@ -160,7 +160,7 @@ const root = {
     updateProduct:(arg) => {
         return db.any(`
                 UPDATE product SET name = '${arg.input.name}', description = '${arg.input.description}', price = ${arg.input.price}, stock = ${arg.input.stock} WHERE id = ${arg.id};
-                SELECT * FROM product WHERE id = ${arg.id}
+                SELECT * FROM product;
             `)
             .then(info => info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock)))
             .catch(err => console.log('UPDATE PRODUCT ERROR: ', err))
@@ -170,10 +170,7 @@ const root = {
                 DELETE FROM product WHERE id = ${id};
                 SELECT * FROM product;
             `)
-            .then(info => {
-                console.log(info);
-                return info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock));
-            })
+            .then(info => info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock)))
             .catch(err => console.log('DELETE PRODUCT ERROR: ', err));
     },
     getAllOrders: ({id}) => {

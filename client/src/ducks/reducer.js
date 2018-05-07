@@ -7,14 +7,15 @@ const
     GET_ALL_ORDERS    = 'GET_ALL_ORDERS',
     GET_ALL_EMPLOYEES = 'GET_ALL_EMPLOYEES',
 
+    POST_PRODUCT      = 'POST_PRODUCT',
     POST_ORDER        = 'POST_ORDER',
     POST_EMPLOYEE     = 'POST_EMPLOYEE',
     
+    PUT_PRODUCT       = 'PUT_PRODUCT',
     PUT_EMPLOYEE      = 'PUT_EMPLOYEE',
 
+    DELETE_PRODUCT    = 'DELETE_PRODUCT',
     DELETE_EMPLOYEE   = 'DELETE_EMPLOYEE';
-    
-    // TEST = 'TEST';
 
 const defualtState = {
     getProductsBool: false,
@@ -26,8 +27,16 @@ const defualtState = {
     getEmployeesBool: false,
     getEmployeesList: [],
 
+    postProductBool: false,
+
     postOrdersBool: false,
     postOrdersResp: {},
+
+    postEmployeeBool: false,
+
+    deleteProductBool: false,
+
+    deleteEmployee: false,
 };
 
 // FUNCTIONS
@@ -107,7 +116,32 @@ export function getEmployees() {
         ))
         .catch(err => console.log('GET ALL EMPLOYEES: ', err))
     }
-}
+};
+
+export function postProduct(input) {
+    return {
+        type: POST_PRODUCT,
+        payload: client.mutate({
+            mutation: gql`
+                mutation($input: ProductInput) {
+                    createProduct(input: $input) {
+                        id
+                        name
+                        description
+                        price
+                        stock
+                    }
+                }
+            `,
+            variables: {
+                input: input
+            }
+        }).then(response => (
+            response.data.createProduct
+        ))
+        .catch(err => console.log('POST PRODUCT: ', err))
+    }
+};
 
 export function postOrder(order_id, product, employee_id, completion, num_of_product) {
     return {
@@ -159,6 +193,27 @@ export function postEmployee(input) {
     }
 };
 
+export function putProduct() {
+    return {
+        type: PUT_PRODUCT,
+        payload: client.mutate({
+            mutation: gql`
+                mutation() {
+                    updateProduct() {
+
+                    }
+                }
+            `,
+            variables: {
+
+            }
+        }).then(response => (
+            response.data.updateProduct
+        ))
+        .catch(err => console.log('PUT PRODUCT: ', err))
+    }
+};
+
 export function putEmployee(id, input) {
     return {
         type: PUT_EMPLOYEE,
@@ -182,6 +237,31 @@ export function putEmployee(id, input) {
             response.data[0]
         ))
         .catch(err => console.log('EMPLOYEE: ', err))
+    }
+};
+
+export function deleteProduct(id) {
+    return {
+        type: DELETE_PRODUCT,
+        payload: client.mutate({
+            mutation: gql`
+                mutation($id: ID!) {
+                    deleteProduct(id: $id) {
+                        id
+                        name
+                        description
+                        price
+                        stock
+                    }
+                }
+            `,
+            variables: {
+                id: id
+            }
+        }).then(response => (
+            response.data.deleteProduct
+        ))
+        .catch(err => console.log('DELETE PRODUCT: ', err))
     }
 };
 
@@ -215,14 +295,6 @@ export function deleteEmployee(id) {
 // REDUCER
 export default function reducer(state = defualtState, action) {
     switch(action.type) {
-        // case `${TEST}_PENDING`:
-        //     return Object.assign({}, state, { employeeListBool: true });
-        
-        // case `${TEST}_FULFILLED`:
-        //     return Object.assign({}, state, { employeeListBool: false, employeeList: action.payload });
-            
-        // case `${TEST}_REJECTED`:
-        //     return Object.assign({}, state, { employeeListBool: false });
         case `${GET_ALL_PRODUCTS}_PENDING`:
             return Object.assign({}, state, { getProductsBool: true });
 
@@ -250,6 +322,15 @@ export default function reducer(state = defualtState, action) {
         case `${GET_ALL_EMPLOYEES}_REJECTED`:
             return Object.assign({}, state, { getEmployeesBool: false });
 
+        case `${POST_PRODUCT}_PENDING`:
+            return Object.assign({}, state, { postProductBool: true });
+
+        case `${POST_PRODUCT}_FULFILLED`:
+            return Object.assign({}, state, { postProductBool: false, getProductsList: action.payload });
+
+        case `${POST_PRODUCT}_REJECTED`:
+            return Object.assign({}, state, { postProductBool: false });            
+
         case `${POST_ORDER}_PENDING`: 
             return Object.assign({}, state, { postOrdersBool: true });
 
@@ -268,6 +349,15 @@ export default function reducer(state = defualtState, action) {
         case `${POST_EMPLOYEE}_REJECTED`:
             return Object.assign({}, state, { postEmployeeBool: false });
 
+        case `${PUT_PRODUCT}_PENDING`:
+            return Object.assign({}, state, { putProductBool: true });
+
+        case `${PUT_PRODUCT}_FULFILLED`:
+            return Object.assign({}, state, { putProductBool: false });
+
+        case `${PUT_PRODUCT}_REJECTED`:
+            return Object.assign({}, state, { putProductBool: false });
+
         case `${PUT_EMPLOYEE}_PENDING`:
             return Object.assign({}, state, { putEmployeeBool: true });
 
@@ -276,7 +366,16 @@ export default function reducer(state = defualtState, action) {
 
         case `${PUT_EMPLOYEE}_REJECTED`:
             return Object.assign({}, state, { putEmployeeBool: false });
-            
+
+        case `${DELETE_PRODUCT}_PENDING`:
+            return Object.assign({}, state, { deleteProductBool: true });
+
+        case `${DELETE_PRODUCT}_FULFILLED`:
+            return Object.assign({}, state,  { deleteProductBool: false, getProductsList: action.payload });
+
+        case `${DELETE_PRODUCT}_REJECTED`:
+            return Object.assign({}, state, { deleteProductBool: false });
+
         case `${DELETE_EMPLOYEE}_PENDING`:
             return Object.assign({}, state, { deleteEmployeeBool: true });
 
