@@ -193,19 +193,24 @@ export function postEmployee(input) {
     }
 };
 
-export function putProduct() {
+export function putProduct(id, input) {
     return {
         type: PUT_PRODUCT,
         payload: client.mutate({
             mutation: gql`
-                mutation() {
-                    updateProduct() {
-
+                mutation($id: ID!, $input: ProductInput) {
+                    updateProduct(id: $id, input: $input) {
+                        id
+                        name
+                        description
+                        price
+                        stock
                     }
                 }
             `,
             variables: {
-
+                id: id,
+                input: input
             }
         }).then(response => (
             response.data.updateProduct

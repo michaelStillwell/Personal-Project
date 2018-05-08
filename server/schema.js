@@ -160,7 +160,7 @@ const root = {
     updateProduct:(arg) => {
         return db.any(`
                 UPDATE product SET name = '${arg.input.name}', description = '${arg.input.description}', price = ${arg.input.price}, stock = ${arg.input.stock} WHERE id = ${arg.id};
-                SELECT * FROM product;
+                SELECT * FROM product WHERE id = ${arg.id};
             `)
             .then(info => info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock)))
             .catch(err => console.log('UPDATE PRODUCT ERROR: ', err))

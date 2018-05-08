@@ -48,9 +48,15 @@ class ProductPage extends Component {
                                     <input type="text" onChange={e => this.setState({description: e.target.value})} placeholder="Description" defaultValue={info.description} />
                                     <input type="number" onChange={e => this.setState({price: e.target.value})} placeholder="Price" defaultValue={info.price} />
                                     <input type="number" onChange={e => this.setState({stock: e.target.value})} placeholder="Stock" defaultValue={info.stock} />
-                                    <button onClick={() => this.state.name && this.state.description && this.state.price && this.state.stock ? (
-                                        this.setState({edit: false})
-                                    ) : alert('Fill out all areas')}>submit</button>
+                                    <button onClick={() => {
+                                        let send = {
+                                            name: this.state.name || info.name,
+                                            description: this.state.description || info.description,
+                                            price: this.state.price || info.price,
+                                            stock: this.state.stock || info.stock
+                                        }
+                                        this.props.putProduct(info.id, send).then(this.setState({edit: false}));
+                                    }}>submit</button>
                                     <button onClick={() => this.setState({edit: false})}>cancel</button>
                                 </div>
                             ) : (
