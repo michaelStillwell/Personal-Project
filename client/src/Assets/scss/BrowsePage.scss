@@ -8,6 +8,7 @@
 
     .browse-modal {
         background: red;
-        transition: 1000ms;
+        overflow: auto;
+        transition: 500ms;
     }
 }

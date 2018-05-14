@@ -19,13 +19,19 @@ class BrowsePage extends Component {
             price: null,
             stock: null,
             create: false,
+            edit: false,
             delete: false,
-            selected: null
+            selected: null,
+            selectedHeight: '0'
         };
     }
 
     componentDidMount() {
         this.props.getProducts();
+    }
+
+    toggleModal(val) {
+        this.state.selectedHeight === 'hidden' ? this.setState({ selected: val, selectedHeight: 'block'}) : this.setState({ selected: val, selectedHeight: 'hidden' });
     }
     
     render() {
@@ -38,23 +44,40 @@ class BrowsePage extends Component {
                     {this.props.getProductsList.map((x, y) => (
                         <div>
                             {/* <li><Link to={`/product/${x.id}`} key={y}>{x.name}</Link></li> */}
-                            <li key={y}>{x.name}</li>
-                            {this.state.selected === y ? (
-                                <div className="browse-modal">
-                                    hi
-                                </div>
-                            ) : false
-
-                            }
-                            {this.state.delete && this.state.selected === y ? (
-                                <div>
-                                    <h5>Are you sure you want to delete {x.name}?</h5>
-                                    <button onClick={() => this.props.deleteProduct(x.id).then(() => this.setState({delete: false, selected: null}))}>Yes</button>
-                                    <button onClick={() => this.setState({delete: false, selected: null})}>No</button>
-                                </div>
-                            ) : (
-                                <button onClick={() => this.setState({delete: true, selected: y})}>delete</button>
-                            )}
+                                <li key={y} onClick={() => {
+                                    this.toggleModal(y);
+                                    this.state.selected === y ? false : this.setState({ edit: false, delete: false, create: false });
+                                }}>{x.name}</li>
+                                    <div className="browse-modal" style={{ height: this.state.selected === y ? '200px' : '0' }}>
+                                        {this.state.selected === y ? (
+                                            <div>
+                                                <p>{x.description}</p>
+                                                <p>{x.price}</p>
+                                                <p>{x.stock}</p>
+                                                {this.state.edit ? (
+                                                    <div>
+                                                        <input type="text"/>
+                                                        <input type="text"/>
+                                                        <input type="text"/>
+                                                        <input type="text"/>
+                                                        <button onClick={() => this.setState({ edit: false })}>Submit</button>
+                                                        <button onClick={() => this.setState({ edit: false })}>Cancel</button>
+                                                    </div>
+                                                ) : (
+                                                    <button onClick={() => this.setState({ edit: true })}>Edit Product</button>
+                                                )}
+                                                {this.state.delete ? (
+                                                    <div>
+                                                        <h5>Are you sure you want to delete {x.name}?</h5>
+                                                        <button onClick={() => this.props.deleteProduct(x.id).then(() => this.setState({ delete: false }))}>Yes</button>
+                                                        <button onClick={() => this.setState({ delete: false })}>No</button>
+                                                    </div>
+                                                ) : (
+                                                    <button onClick={() => this.setState({ delete: true })}>delete</button>
+                                                )}
+                                            </div>
+                                        ) : false}
+                                    </div>
                         </div>
                     ))}
                 </ul>
@@ -65,7 +88,7 @@ class BrowsePage extends Component {
                             <input type="text" onChange={e => this.setState({ description: e.target.value})} placeholder="Description" />
                             <input type="number" onChange={e => this.setState({ price: e.target.value})} placeholder="Price" />
                             <input type="number" onChange={e => this.setState({ stock: e.target.value})} placeholder="Stock" />
-                            <button onClick={() => this.props.postProduct({name: this.state.name, description: this.state.description, price: this.state.price, stock: this.state.stock})}>submit</button>
+                            <button onClick={() => this.props.postProduct({name: this.state.name, description: this.state.description, price: this.state.price, stock: this.state.stock}).then(() => this.setState({ create: false, name: '', description: '', price: null, stock: null}))}>submit</button>
                             <button onClick={() => this.setState({create: false, name: '', description: '', price: null, stock: null})}>cancel</button>
                         </div>
                     ) : (
