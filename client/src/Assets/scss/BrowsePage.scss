@@ -1,3 +1,13 @@
-h1 {
-    color: red;
+.browse-page {
+    h1 {
+        color: #E3FA98;
+        // border: solid 2px red;
+        padding: 5px;
+        margin: 5px 10px;
+    }
+
+    .browse-modal {
+        background: red;
+        transition: 1000ms;
+    }
 }

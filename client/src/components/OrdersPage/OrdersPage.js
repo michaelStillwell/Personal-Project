@@ -13,10 +13,14 @@ class OrdersPage extends Component {
         return (
             <div>
                 <h1>Orders</h1>
-                <h3>Current Order:</h3>
-                <ul>
-                    {localStorage.getObject('|||||') ? localStorage.getObject('|||||').map(x => <li>{x.name} - num: {x.count}</li>) : false}
-                </ul>
+                {localStorage.getObject('|||||') ? (
+                    <div>
+                        <h3>Current Order:</h3>
+                        <ul>
+                            {localStorage.getObject('|||||') ? localStorage.getObject('|||||').map(x => <li>{x.name} - num: {x.count}</li>) : false}
+                        </ul>
+                    </div>
+                ) : false}
                 {this.props.getOrdersBool ? (
                     <h1>Loading...</h1>
                 ) : (

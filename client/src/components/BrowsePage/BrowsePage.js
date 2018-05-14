@@ -32,12 +32,20 @@ class BrowsePage extends Component {
         return this.props.getProductsBool ? (
             <h1>Loading...</h1>
         ) : (
-            <div>
+            <div className="browse-page">
                 <h1>Browse</h1>
                 <ul>
                     {this.props.getProductsList.map((x, y) => (
                         <div>
-                            <li><Link to={`/product/${x.id}`} key={y}>{x.name}</Link></li>
+                            {/* <li><Link to={`/product/${x.id}`} key={y}>{x.name}</Link></li> */}
+                            <li key={y}>{x.name}</li>
+                            {this.state.selected === y ? (
+                                <div className="browse-modal">
+                                    hi
+                                </div>
+                            ) : false
+
+                            }
                             {this.state.delete && this.state.selected === y ? (
                                 <div>
                                     <h5>Are you sure you want to delete {x.name}?</h5>
