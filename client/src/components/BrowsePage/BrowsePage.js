@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { 
-    getProducts, postProduct, deleteProduct
+    getProducts, postProduct, putProduct, deleteProduct
 } from '../../ducks/reducer';
 
 import '../../Assets/css/BrowsePage.min.css';
@@ -50,21 +50,26 @@ class BrowsePage extends Component {
                                 }}>{x.name}</li>
                                     <div className="browse-modal" style={{ height: this.state.selected === y ? '200px' : '0' }}>
                                         {this.state.selected === y ? (
-                                            <div>
+                                            <div onBlur={() => console.log('hi')}>
                                                 <p>{x.description}</p>
                                                 <p>{x.price}</p>
                                                 <p>{x.stock}</p>
                                                 {this.state.edit ? (
                                                     <div>
-                                                        <input type="text"/>
-                                                        <input type="text"/>
-                                                        <input type="text"/>
-                                                        <input type="text"/>
-                                                        <button onClick={() => this.setState({ edit: false })}>Submit</button>
+                                                        <input type="text" onChange={e => this.setState({ name: e.target.value })} placeholder="Name" defaultValue={x.name}/>
+                                                        <input type="text" onChange={e => this.setState({ description: e.target.value })} placeholder="Description" defaultValue={x.description}/>
+                                                        <input type="text" onChange={e => this.setState({ price: e.target.value })} placeholder="Price" defaultValue={x.price}/>
+                                                        <input type="text" onChange={e => this.setState({ stock: e.target.value })} placeholder="Stock" defaultValue={x.stock}/>
+                                                        <button onClick={() => this.props.putProduct(x.id, { 
+                                                            name: this.state.name || x.name, 
+                                                            description: this.state.description || x.description, 
+                                                            price: this.state.price || x.price, 
+                                                            stock: this.state.stock || x.stock 
+                                                        }).then(() => this.setState({ edit: false }))}>Submit</button>
                                                         <button onClick={() => this.setState({ edit: false })}>Cancel</button>
                                                     </div>
                                                 ) : (
-                                                    <button onClick={() => this.setState({ edit: true })}>Edit Product</button>
+                                                    <button onClick={() => this.setState({ edit: true, delete: false, create: false })}>Edit Product</button>
                                                 )}
                                                 {this.state.delete ? (
                                                     <div>
@@ -92,7 +97,10 @@ class BrowsePage extends Component {
                             <button onClick={() => this.setState({create: false, name: '', description: '', price: null, stock: null})}>cancel</button>
                         </div>
                     ) : (
-                        <button onClick={() => this.setState({create: true})}>Create Product</button>
+                        <button onClick={() => {
+                            this.setState({ create: true, edit: false, delete: false });
+                            this.toggleModal(null);
+                        }}>Create Product</button>
                     )
                 ) : false}
             </div>
@@ -101,4 +109,4 @@ class BrowsePage extends Component {
 }
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps, { getProducts, postProduct, deleteProduct })(BrowsePage);
+export default connect(mapStateToProps, { getProducts, postProduct, putProduct, deleteProduct })(BrowsePage);

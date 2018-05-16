@@ -212,9 +212,10 @@ export function putProduct(id, input) {
                 id: id,
                 input: input
             }
-        }).then(response => (
-            response.data.updateProduct
-        ))
+        }).then(response => {
+            console.log(response.data)
+            return response.data.updateProduct;
+        })
         .catch(err => console.log('PUT PRODUCT: ', err))
     }
 };
@@ -358,7 +359,7 @@ export default function reducer(state = defualtState, action) {
             return Object.assign({}, state, { putProductBool: true });
 
         case `${PUT_PRODUCT}_FULFILLED`:
-            return Object.assign({}, state, { putProductBool: false });
+            return Object.assign({}, state, { putProductBool: false, getProductsList: action.payload });
 
         case `${PUT_PRODUCT}_REJECTED`:
             return Object.assign({}, state, { putProductBool: false });

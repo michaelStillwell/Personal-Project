@@ -145,14 +145,14 @@ const root = {
             .catch(err => console.log('GET PRODUCT ERROR: ', err));
     },
     getAllProducts: () => {
-        return db.any(`SELECT * FROM product`)
+        return db.any(`SELECT * FROM product ORDER BY id`)
             .then(info => info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock)))
             .catch(err => console.log('GET ALL PRODUCTS ERROR: ', err));
     },
     createProduct: (arg) => {
         return db.any(`
                 INSERT INTO product (name, description, price, stock) VALUES ('${arg.input.name}', '${arg.input.description}', ${arg.input.price}, ${arg.input.stock});
-                SELECT * FROM product;
+                SELECT * FROM product ORDER BY id;
             `)
             .then(info => info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock)))
             .catch(err => console.log('CREATE PRODUCT ERROR: ', err));
@@ -160,7 +160,7 @@ const root = {
     updateProduct:(arg) => {
         return db.any(`
                 UPDATE product SET name = '${arg.input.name}', description = '${arg.input.description}', price = ${arg.input.price}, stock = ${arg.input.stock} WHERE id = ${arg.id};
-                SELECT * FROM product WHERE id = ${arg.id};
+                SELECT * FROM product ORDER BY id;
             `)
             .then(info => info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock)))
             .catch(err => console.log('UPDATE PRODUCT ERROR: ', err))
@@ -168,7 +168,7 @@ const root = {
     deleteProduct:({id}) => {
         return db.any(`
                 DELETE FROM product WHERE id = ${id};
-                SELECT * FROM product;
+                SELECT * FROM product ORDER BY id;
             `)
             .then(info => info.map(x => new Product(x.id, x.name, x.description, x.price, x.stock)))
             .catch(err => console.log('DELETE PRODUCT ERROR: ', err));
