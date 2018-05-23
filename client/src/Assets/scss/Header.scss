@@ -5,31 +5,37 @@
     height: 25vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
 
     h1 {
         color: $header_text_color;
-        margin: 5px;
+        text-shadow: -4px 4px $header_text_shadow;
+        box-shadow: -3px 3px $header_text_shadow;
+        margin: 5px 10px;
+        padding: 0 5px;
     }
 
     .navbar {
         background: $header_navbar_background_color;
         display: flex;
         flex-direction: row-reverse;
-        justify-content: flex-start;
-        border: solid 5px #1E9977;
-        border-radius: 2px;
+        justify-content: flex-end;
+        border-bottom: 3px $header_link_shadow solid;
+        border-left: 3px $header_link_shadow solid;
 
         a {
+            font-size: 0.7em;
             color: $header_link_color;
             margin: 0 7px;
             padding: 5px 3px 8px;
             text-decoration: none;
             font-weight: bold;
             transition: 250ms ease;
+            text-shadow: -2px 2px $header_link_shadow;
 
             &:hover {
-                background: $header_link_hover_color;
+                color: $header_link_hover_color;
+                text-shadow: -2px 2px $header_link_hover_shadow;
             }
         }
     }
