@@ -1,1 +1,1 @@
-.browse-page h1{color:#e3fa98;padding:5px;margin:5px 10px}.browse-page .browse-modal{background:red;overflow:auto;transition:.5s}
+.browse-page{display:flex;flex-direction:column;align-items:center;width:100%}.browse-page h1{color:#e3fa98;font-size:6vh;padding:5px;margin:5px 10px}.browse-page ul{width:100%}.browse-page li{color:#fff;font-size:65px;list-style:none;margin:10px;text-shadow:-3px 3px #000}.browse-page .browse-modal{background:red;overflow:auto;transition:.5s}

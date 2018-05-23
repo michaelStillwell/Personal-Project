@@ -43,14 +43,13 @@ class BrowsePage extends Component {
                 <ul>
                     {this.props.getProductsList.map((x, y) => (
                         <div>
-                            {/* <li><Link to={`/product/${x.id}`} key={y}>{x.name}</Link></li> */}
                                 <li key={y} onClick={() => {
                                     this.toggleModal(y);
-                                    this.state.selected === y ? false : this.setState({ edit: false, delete: false, create: false });
+                                    this.state.selected === y ? this.setState({ selected: null, edit: false, delete: false, create: false }) : this.setState({ edit: false, delete: false, create: false });
                                 }}>{x.name}</li>
-                                    <div className="browse-modal" style={{ height: this.state.selected === y ? '200px' : '0' }}>
+                                    <div className="browse-modal" style={{ height: this.state.selected === y ? '200px' : '0', width: this.state.selected === y ? '100%' : '0' }}>
                                         {this.state.selected === y ? (
-                                            <div onBlur={() => console.log('hi')}>
+                                            <div>
                                                 <p>{x.description}</p>
                                                 <p>{x.price}</p>
                                                 <p>{x.stock}</p>

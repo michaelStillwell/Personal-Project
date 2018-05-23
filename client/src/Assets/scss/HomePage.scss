@@ -1,0 +1,9 @@
+@import '_colors.scss';
+
+.home-page {
+    h1 {
+        color: $text_color;
+        text-shadow: -3px 3px $text_shadow;
+        margin: 10px;
+    }
+}

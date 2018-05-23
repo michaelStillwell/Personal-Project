@@ -1,5 +1,7 @@
+@import '_colors.scss';
+
 body {
     margin: 0;
     padding: 0;
-    background: rgba(30, 30, 30, .6);
+    background: $background_color;
 }

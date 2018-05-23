@@ -1,9 +1,29 @@
+@import '_fonts.scss';
+
 .browse-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
     h1 {
         color: #E3FA98;
+        font-size: $font_size_h1;
         // border: solid 2px red;
         padding: 5px;
         margin: 5px 10px;
+    }
+
+    ul {
+        width: 100%;
+    }
+
+    li {
+        color: white;
+        font-size: 65px;
+        list-style: none;
+        margin: 10px;
+        text-shadow: -3px 3px black;
     }
 
     .browse-modal {
