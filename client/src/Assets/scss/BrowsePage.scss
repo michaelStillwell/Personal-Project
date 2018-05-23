@@ -1,3 +1,4 @@
+@import '_colors.scss';
 @import '_fonts.scss';
 
 .browse-page {
@@ -16,19 +17,28 @@
 
     ul {
         width: 100%;
+        padding: 0 10px;
     }
 
     li {
         color: white;
+        box-shadow: -3px 3px $background_shadow;
         font-size: 65px;
         list-style: none;
         margin: 10px;
+        padding: 5px 10px;
         text-shadow: -3px 3px black;
+        cursor: pointer;
+
+        &:hover {
+            background: red;
+        }
     }
 
     .browse-modal {
-        background: red;
+        background: $header_background_color;
         overflow: auto; 
         transition: 500ms;
+        width: 80%;
     }
 }

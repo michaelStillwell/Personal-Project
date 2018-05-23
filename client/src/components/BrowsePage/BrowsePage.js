@@ -47,7 +47,7 @@ class BrowsePage extends Component {
                                     this.toggleModal(y);
                                     this.state.selected === y ? this.setState({ selected: null, edit: false, delete: false, create: false }) : this.setState({ edit: false, delete: false, create: false });
                                 }}>{x.name}</li>
-                                    <div className="browse-modal" style={{ height: this.state.selected === y ? '200px' : '0', width: this.state.selected === y ? '100%' : '0' }}>
+                                    <div className="browse-modal" style={{ height: this.state.selected === y ? '200px' : '0' }}>
                                         {this.state.selected === y ? (
                                             <div>
                                                 <p>{x.description}</p>
